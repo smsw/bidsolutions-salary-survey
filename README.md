@@ -1,4 +1,4 @@
-[![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/)
+[![Bid Solutions Logo](http://bidsolutions.smswmedia.com/wp-content/themes/roots/assets/img/bid-solutions-logo.png)](http://bidsolutions.smswmedia.com)
 
 [![Build Status](https://travis-ci.org/meanjs/mean.svg?branch=master)](https://travis-ci.org/meanjs/mean)
 [![Dependencies Status](https://david-dm.org/meanjs/mean.svg)](https://david-dm.org/meanjs/mean)
