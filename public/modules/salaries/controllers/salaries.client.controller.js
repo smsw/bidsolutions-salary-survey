@@ -5,6 +5,35 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
 	function($scope, $stateParams, $location, Authentication, Salaries) {
 		$scope.authentication = Authentication;
 
+        // Calculate Average Salary
+        $scope.calculateAvg = function(){
+            var salaries = [], totalSalary = 0;
+
+            angular.forEach($scope.salaries, function (value) {
+                this.push(value.salary);
+                totalSalary += value.salary;
+            }, salaries);
+
+            return totalSalary/salaries.length;
+        };
+
+        // Create new chart
+        $scope.chartConfig = {
+            options: {
+                chart: {
+                    type: 'pie'
+                }
+            },
+            series: [{
+                data: [22000, 15000, 1000]
+            }],
+            title: {
+                text: 'Average Salary'
+            },
+
+            loading: false
+        };
+
 		// Create new Salary
 		$scope.create = function() {
 			// Create new Salary object

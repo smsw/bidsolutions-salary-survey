@@ -22,10 +22,14 @@ module.exports = {
 				'public/lib/angular-cookies/angular-cookies.js', 
 				'public/lib/angular-animate/angular-animate.js', 
 				'public/lib/angular-touch/angular-touch.js', 
-				'public/lib/angular-sanitize/angular-sanitize.js', 
+				'public/lib/angular-sanitize/angular-sanitize.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+                'public/lib/highcharts-release/adapters/standalone-framework.js',
+                'public/lib/highcharts-release/highcharts.js',
+                'public/lib/highcharts-ng/dist/highcharts-ng.js'
+
 			]
 		},
 		css: [
