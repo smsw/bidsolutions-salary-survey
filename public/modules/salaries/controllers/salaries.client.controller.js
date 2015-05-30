@@ -2,11 +2,11 @@
 
 // Salaries controller
 angular.module('salaries').controller('SalariesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Salaries',
-    function($scope, $stateParams, $location, Authentication, Salaries) {
+    function ($scope, $stateParams, $location, Authentication, Salaries) {
         $scope.authentication = Authentication;
 
         // Calculate Average Salary
-        $scope.calculateAvg = function(){
+        $scope.calculateAvg = function () {
             var salaries = [], totalSalary = 0;
 
             angular.forEach($scope.salaries, function (value) {
@@ -14,7 +14,7 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
                 totalSalary += value.salary;
             }, salaries);
 
-            return totalSalary/salaries.length;
+            return totalSalary / salaries.length;
         };
 
         // Create new chart
@@ -35,9 +35,9 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
         };
 
         // Create new Salary
-        $scope.create = function() {
+        $scope.create = function () {
             // Create new Salary object
-            var salary = new Salaries ({
+            var salary = new Salaries({
                 name: this.name,
                 salary: this.salary,
                 bonus: this.bonus,
@@ -48,21 +48,21 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
             });
 
             // Redirect after save
-            salary.$save(function(response) {
+            salary.$save(function (response) {
                 $location.path('salaries/' + response._id);
 
                 // Clear form fields
                 $scope.name = '';
                 $scope.salary = '';
                 $scope.bonus = '';
-            }, function(errorResponse) {
+            }, function (errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
         };
 
         // Remove existing Salary
-        $scope.remove = function(salary) {
-            if ( salary ) {
+        $scope.remove = function (salary) {
+            if (salary) {
                 salary.$remove();
 
                 for (var i in $scope.salaries) {
@@ -71,30 +71,30 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
                     }
                 }
             } else {
-                $scope.salary.$remove(function() {
+                $scope.salary.$remove(function () {
                     $location.path('salaries');
                 });
             }
         };
 
         // Update existing Salary
-        $scope.update = function() {
+        $scope.update = function () {
             var salary = $scope.salary;
 
-            salary.$update(function() {
+            salary.$update(function () {
                 $location.path('salaries/' + salary._id);
-            }, function(errorResponse) {
+            }, function (errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
         };
 
         // Find a list of Salaries
-        $scope.find = function() {
+        $scope.find = function () {
             $scope.salaries = Salaries.query();
         };
 
         // Find existing Salary
-        $scope.findOne = function() {
+        $scope.findOne = function () {
             $scope.salary = Salaries.get({
                 salaryId: $stateParams.salaryId
             });
