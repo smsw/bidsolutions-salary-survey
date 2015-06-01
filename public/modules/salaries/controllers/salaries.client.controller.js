@@ -1,21 +1,9 @@
 'use strict';
 
 // Salaries controller
-angular.module('salaries').controller('SalariesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Salaries',
-    function ($scope, $stateParams, $location, Authentication, Salaries) {
+angular.module('salaries').controller('SalariesController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Salaries',
+    function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
         $scope.authentication = Authentication;
-
-        // Calculate Average Salary
-        $scope.calculateAvg = function () {
-            var salaries = [], totalSalary = 0;
-
-            angular.forEach($scope.salaries, function (value) {
-                this.push(value.salary);
-                totalSalary += value.salary;
-            }, salaries);
-
-            return totalSalary / salaries.length;
-        };
 
         // Create new chart
         $scope.chartConfig = {
@@ -30,7 +18,6 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
             title: {
                 text: 'Average Salary'
             },
-
             loading: false
         };
 

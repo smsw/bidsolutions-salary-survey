@@ -3,6 +3,10 @@
         <h1>Salaries</h1>
     </div>
 
+	<ul class="list-unstyled">
+		<li><h3>Average Salary {{salaries | averageSalary | currency}}</h3></li>
+	</ul>
+
     <highchart id="avgSalary" config="chartConfig"></highchart>
 
     <div class="list-group">
@@ -13,6 +17,9 @@
 				by
 				<span data-ng-bind="salary.user.displayName"></span>
 			</small>
+
+	        <span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
+
 			<h4 class="list-group-item-heading" data-ng-bind="salary.name"></h4>
         </a>
     </div>
@@ -20,3 +27,4 @@
     	No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
     </div>
 </section>
+
