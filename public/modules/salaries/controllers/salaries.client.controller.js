@@ -5,6 +5,23 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
     function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
         $scope.authentication = Authentication;
 
+
+        $scope.genders = ["Female", "Male"];
+
+        $scope.friends = [
+            {name: 'Peter', age: 20},
+            {name: 'Pablo', age: 55},
+            {name: 'Linda', age: 20},
+            {name: 'Marta', age: 37},
+            {name: 'Othello', age: 20},
+            {name: 'Markus', age: 32}
+        ];
+
+        $scope.filterFunction = function(element) {
+            return element.name.match(/^Ma/) ? true : false;
+        };
+
+
         // Create new chart
         $scope.chartConfig = {
             options: {
