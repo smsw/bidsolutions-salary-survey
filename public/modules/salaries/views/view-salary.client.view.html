@@ -6,7 +6,7 @@
 			<li ng-if="salary.bonus">Bonus : <strong data-ng-bind="salary.bonus"></strong></li>
 			<li ng-if="salary.gender">Gender : <strong data-ng-bind="salary.gender"></strong></li>
 			<li ng-if="salary.employment_location">Location : <strong data-ng-bind="salary.employment_location"></strong></li>
-			<li ng-if="salary.employment_type">Location : <strong data-ng-bind="salary.employment_type"></strong></li>
+			<li ng-if="salary.employment_type">Employment Type : <strong data-ng-bind="salary.employment_type"></strong></li>
 			<li ng-if="salary.working_practice">Working Practice : <strong data-ng-bind="salary.working_practice"></strong></li>
 
 		</ul>
@@ -27,4 +27,6 @@
 			<span data-ng-bind="salary.user.displayName"></span>
 		</em>
 	</small>
+
+	            <pre>{{salary | json}}</pre>
 </section>

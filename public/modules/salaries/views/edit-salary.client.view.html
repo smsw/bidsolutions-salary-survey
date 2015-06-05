@@ -17,12 +17,27 @@
                         <input type="text" data-ng-model="salary.salary" id="salary" class="form-control" placeholder="Salary" required>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label class="control-label" for="name">Gender</label>
+                    <label class="control-label" for="gender">Gender</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="salary.gender" id="gender" class="form-control" placeholder="Gender" required>
+	                    <select id="gender" data-ng-model="salary.gender" class="form-control" required>
+		                    <option value="m">Male</option>
+		                    <option value="f">Female</option>
+	                    </select>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="employment_type">Employment Type</label>
+                    <div class="controls">
+	                    <select id="employment_type" data-ng-model="salary.employment_type" class="form-control" required>
+		                    <option value="permanent">Permanent</option>
+		                    <option value="self_employed">Self Employed</option>
+	                    </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-default">
                 </div>

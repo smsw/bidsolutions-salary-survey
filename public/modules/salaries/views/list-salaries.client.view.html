@@ -1,46 +1,62 @@
-<section ng-controller="SalariesController" data-ng-init="find()">
+<section data-ng-controller="SalariesController" data-ng-init="find()">
     <div class="page-header">
         <h1>Salaries</h1>
     </div>
 
+	<!--
 	<ul class="list-unstyled">
-		<li><h3>Average Salary {{salaries | calcAvg | currency}}</h3></li>
+		<li><h3>Average Salary {{salaries | calcAvg | currency }}</h3></li>
+	</ul>
+	-->
+
+
+
+	<h4>Filters</h4>
+    <hr>
+
+	<div class="row">
+		<div class="col-md-3">
+			<label for="selectGender">Gender</label>
+			<select data-ng-model="selectGender" class="form-control" id="selectGender">
+				<option value=""> - Select all -</option>
+				<option value="m">Male</option>
+				<option value="f">Female</option>
+			</select>
+		</div>
+
+
+		<div class="col-md-3">
+			<label for="selectEmployment">Employment Type</label>
+			<select data-ng-model="selectEmployment" class="form-control" id="selectEmployment">
+				<option value=""> - Select all -</option>
+				<option value="permanent">Permanent</option>
+				<option value="self_employed">Self Employed</option>
+			</select>
+		</div>
+	</div>
+
+	<hr>
+
+
+	<!--
+	<ul ng-repeat="salary in salaries | filter : {gender : selectGender }">
+		<li>{{ salary.name }} - {{ salary.salary }} - {{salary.gender === 'f' ? 'Female' : 'Male'}}</li>
 	</ul>
 
 
-    <hr>
 
-
-    <h3>Gender</h3>
-
-    <!--<select ng-model="selectGender" ng-options="salary as salary.gender group by salary.gender for salary in salaries"></select>-->
-    <select ng-model="test">
-        <option value="Female">Female</option>
-        <option value="Male">Male</option>
-
-    </select>
-
-
-    <input ng-model="test" type="text" placeholder="Filter by name and age=20">
-
-
-    <ul ng-repeat="salary in salaries | filter:test | orderBy: test">
-        <li>{{ salary.name }} - {{ salary.salary }} - {{ salary.gender }}</li>
-    </ul>
-
-
-    <pre>{{selectGender | json}}</pre>
+	-->
 
 
 
-
+<!--
     <hr>
     <h3>Simple Filter by Query</h3>
     <form class="form-inline">
         <input ng-model="bySimple" type="text" placeholder="Filter by" autofocus>
     </form>
     <ul ng-repeat="salary in salaries | filter: { salary: bySimple }">
-        <li>{{ salary.name }} - {{ salary.salary }}</li>
+        <li>{{ salary.name }} - {{ salary.salary }} {{ salary.gender }}</li>
     </ul>
 
 
@@ -55,25 +71,38 @@
         <li>{{friend.name}} ({{friend.age}})</li>
     </ul>
 
+-->
 
-    <highchart id="avgSalary" config="chartConfig"></highchart>
 
-    <div class="list-group">
-        <a data-ng-repeat="salary in salaries" data-ng-href="#!/salaries/{{salary._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="salary.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="salary.user.displayName"></span>
-			</small>
+	<input ng-model="test_salary[0].y" type="number">
+	<input ng-model="test_salary[1].y" type="number">
+	<input ng-model="test_salary[2].y" type="number">
 
-	        <span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
+    <salary-chart data="test_salary"></salary-chart>
 
-			<h4 class="list-group-item-heading" data-ng-bind="salary.name"></h4>
-        </a>
-    </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
-    	No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
-    </div>
+	<h4>Results</h4>
+	<hr>
+
+	<div class="list-group">
+		<a data-ng-repeat="salary in salaries | filter : {gender : selectGender } | filter: { employment_type : selectEmployment }" data-ng-href="#!/salaries/{{salary._id}}" class="list-group-item">
+
+			<span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
+			<ul class="list-unstyled">
+				<li ng-if="salary.name"><strong>Name:</strong> {{ salary.name }}</li>
+				<li><strong>Gender:</strong> {{ salary.gender === 'f' ? 'Female' : 'Male' }}</li>
+				<li ng-if="salary.employment_type">
+					<strong>Employment:</strong> {{salary.employment_type === 'self_employed' ? 'Self Employed' : 'Permanent'}}
+				</li>
+			</ul>
+		</a>
+
+		<pre>
+		{{ salaries | json }}
+		</pre>
+	</div>
+
+	<div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
+		No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
+	</div>
 </section>
 

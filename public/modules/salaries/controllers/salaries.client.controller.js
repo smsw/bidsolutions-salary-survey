@@ -5,38 +5,11 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
     function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
         $scope.authentication = Authentication;
 
-
-        $scope.genders = ["Female", "Male"];
-
-        $scope.friends = [
-            {name: 'Peter', age: 20},
-            {name: 'Pablo', age: 55},
-            {name: 'Linda', age: 20},
-            {name: 'Marta', age: 37},
-            {name: 'Othello', age: 20},
-            {name: 'Markus', age: 32}
+        $scope.test_salary = [
+            {name: 'ideas1', y: 1},
+            {name: 'ideas2', y: 7},
+            {name: 'ideas3', y: 9},
         ];
-
-        $scope.filterFunction = function(element) {
-            return element.name.match(/^Ma/) ? true : false;
-        };
-
-
-        // Create new chart
-        $scope.chartConfig = {
-            options: {
-                chart: {
-                    type: 'pie'
-                }
-            },
-            series: [{
-                data: [22000, 15000, 1000]
-            }],
-            title: {
-                text: 'Average Salary'
-            },
-            loading: false
-        };
 
         // Create new Salary
         $scope.create = function () {
