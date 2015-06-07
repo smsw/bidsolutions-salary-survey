@@ -16,21 +16,9 @@ angular.module('salaries')
             };
         }
     )
+    .filter('testFilter', function (){
 
-    .filter('calcBonus',
-        function () {
-            return function (input) {
-                // Calculate Average Salary
-                var salaries = [], totalSalary = 0;
+       return function(input) {
+       }
 
-                console.log(input);
-                angular.forEach(input, function (value) {
-                    this.push(value.salary);
-                    totalSalary += value.salary;
-                }, salaries);
-
-                return totalSalary / salaries.length;
-            };
-        }
-    );
-
+    });
