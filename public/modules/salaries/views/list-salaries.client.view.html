@@ -3,12 +3,9 @@
         <h1>Salaries</h1>
     </div>
 
-
 	<ul class="list-unstyled">
 		<li><h3>Average Salary {{salaries | calcAvg | currency }}</h3></li>
 	</ul>
-
-
 
 	<h4>Filters</h4>
     <hr>
@@ -16,34 +13,40 @@
 	<div class="row">
 		<div class="col-md-3">
 			<label for="selectGender">Gender</label>
-            <select data-ng-model="selectGender" ng-change="filtersChanged()" class="form-control" id="selectGender">
-                <option value=""> - Select all -</option>
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-            </select>
+			<select data-ng-model="salary.gender" ng-change="selectionChange()" class="form-control" id="selectGender">
+				<option value=""> - Select all -</option>
+				<option value="m">Male</option>
+				<option value="f">Female</option>
+			</select>
 		</div>
 
 
 		<div class="col-md-3">
 			<label for="selectOther">Employment Type</label>
-            <select data-ng-model="selectEmployment" ng-change="filtersChanged()" class="form-control" id="selectOther">
-                <option value=""> - Select all -</option>
-                <option value="primary">Primary</option>
-                <option value="secondary">Secondary</option>
-            </select>
+			<select data-ng-model="salary.employment_type" ng-change="selectionChange()" class="form-control" id="selectOther">
+				<option value=""> - Select all -</option>
+				<option value="primary">Primary</option>
+				<option value="secondary">Secondary</option>
+			</select>
+		</div>
+
+
+		<div class="col-md-3">
+			<label for="selectOther">Current Role</label>
+			<select data-ng-model="salary.current_role" ng-change="selectionChange()" class="form-control" id="current_role">
+				<option value=""> - Select all -</option>
+				<option value="Bid Manager">Bid Manager</option>
+				<option value="Document Manager">Document Manager</option>
+				<option value="Proposal Manager">Proposal Manager</option>
+			</select>
 		</div>
 	</div>
 
-
-
     <salary-chart data="filtered"></salary-chart>
-
 
     <pre>
         {{ filtered | json }}
     </pre>
-    <!--<salary-chart data="salary_data"></salary-chart>-->
-
 
 	<h4>Results</h4>
 	<hr>
@@ -66,4 +69,3 @@
 		No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
 	</div>
 </section>
-

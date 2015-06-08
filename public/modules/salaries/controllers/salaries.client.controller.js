@@ -5,66 +5,72 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
   function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
     $scope.authentication = Authentication;
 
-/*
-    // Arrange data for highcharts
-    Salaries.query({}, function (data) {
-      $scope.salary_data = [];
+    /*
+      // To be put into a service
 
-      angular.forEach(data, function (value, key) {
-        this.push({
-          name: value.name,
-          gender: value.gender,
-          employment_type: value.employment_type,
-          y: value.salary
-        });
-      }, $scope.salary_data);
-      console.log('Prepared Salary object for Highcharts!');
-    });
-*/
+      // Arrange data for highcharts
+      Salaries.query({}, function (data) {
+        $scope.salary_data = [];
+
+        angular.forEach(data, function (value, key) {
+          this.push({
+            name: value.name,
+            gender: value.gender,
+            employment_type: value.employment_type,
+            y: value.salary
+          });
+        }, $scope.salary_data);
+        console.log('Prepared Salary object for Highcharts!');
+      });
+    */
 
     // Sample data for now
     $scope.salary_data = [{
-      name: 'Jen',
-      gender: 'f',
-      other: 'secondary',
-      y: 2000
-    },
+        name: 'Jen',
+        gender: 'f',
+        employment_type: 'secondary',
+        current_role: 'Bid Manager',
+        y: 2000
+      },
       {
         name: 'Bob',
         gender: 'm',
-        other: 'primary',
+        employment_type: 'primary',
+        current_role: 'Bid Manager',
         y: 1200
       },
       {
         name: 'John',
         gender: 'm',
-        other: 'secondary',
+        employment_type: 'secondary',
+        current_role: 'Document Manager',
         y: 1000
       },
       {
         name: 'Lucy',
         gender: 'f',
-        other: 'primary',
+        employment_type: 'primary',
+        current_role: 'Document Manager',
         y: 2500
       },
       {
         name: 'Claire',
         gender: 'f',
-        other: 'secondary',
+        employment_type: 'secondary',
+        current_role: 'Proposal Manager',
         y: 2500
       }
     ];
 
 
-    // Detect filter change and apply chaining filter logic. (This needs work to scale up.)
-    $scope.filtersChanged = function () {
+    $scope.selectionChange = function () {
       var data = angular.copy($scope.salary_data);
-      var filtered = $filter('filter')(data, {gender: $scope.selectGender});
-      filtered = $filter('filter')(filtered, {other: $scope.selectEmployment});
-      $scope.filtered = filtered;
+      var salaryObj = $scope.salary;
+      console.log(salaryObj);
+      $scope.filtered = $filter('filter')(data, salaryObj);
     };
-    $scope.filtersChanged();
 
+    $scope.selectionChange();
 
 
     // Create new Salary
