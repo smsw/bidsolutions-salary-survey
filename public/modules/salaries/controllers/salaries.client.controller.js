@@ -1,8 +1,8 @@
 'use strict';
 
 // Salaries controller
-angular.module('salaries').controller('SalariesController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Salaries', 'TempSalaryData',
-    function ($scope, $stateParams, $location, $filter, Authentication, Salaries, TempSalaryData) {
+angular.module('salaries').controller('SalariesController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Salaries',
+    function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
         $scope.authentication = Authentication;
 
         // Create new Salary
