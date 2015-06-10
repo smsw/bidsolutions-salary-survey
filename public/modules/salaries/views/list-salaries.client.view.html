@@ -3,69 +3,50 @@
         <h1>Salaries</h1>
     </div>
 
-	<ul class="list-unstyled">
-		<li><h3>Average Salary {{salaries | calcAvg | currency }}</h3></li>
-	</ul>
 
-	<h4>Filters</h4>
+    <h4>Filters</h4>
     <hr>
 
-	<div class="row">
-		<div class="col-md-3">
-			<label for="selectGender">Gender</label>
-			<select data-ng-model="salary.gender" ng-change="selectionChange()" class="form-control" id="selectGender">
-				<option value=""> - Select all -</option>
-				<option value="m">Male</option>
-				<option value="f">Female</option>
-			</select>
-		</div>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="gender">Gender</label>
+            <select data-ng-model="salary.gender" ng-change="filterUpdate()" class="form-control" id="gender">
+                <option value=""> - Select all -</option>
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+            </select>
+        </div>
 
+    </div>
 
-		<div class="col-md-3">
-			<label for="selectOther">Employment Type</label>
-			<select data-ng-model="salary.employment_type" ng-change="selectionChange()" class="form-control" id="selectOther">
-				<option value=""> - Select all -</option>
-				<option value="primary">Primary</option>
-				<option value="secondary">Secondary</option>
-			</select>
-		</div>
-
-
-		<div class="col-md-3">
-			<label for="selectOther">Current Role</label>
-			<select data-ng-model="salary.current_role" ng-change="selectionChange()" class="form-control" id="current_role">
-				<option value=""> - Select all -</option>
-				<option value="Bid Manager">Bid Manager</option>
-				<option value="Document Manager">Document Manager</option>
-				<option value="Proposal Manager">Proposal Manager</option>
-			</select>
-		</div>
-	</div>
+    <br>
 
     <salary-chart data="filtered"></salary-chart>
 
     <pre>
-        {{ filtered | json }}
+        {{ salaries | json }}
     </pre>
 
-	<h4>Results</h4>
-	<hr>
+    <h4>Results</h4>
+    <hr>
 
-	<div class="list-group">
-		<a data-ng-repeat="salary in salaries | filter : {gender : selectGender } | filter: { employment_type : selectEmployment }" data-ng-href="#!/salaries/{{salary._id}}" class="list-group-item">
+    <div class="list-group">
+        <a data-ng-repeat="salary in salaries | filter : {gender : selectGender } | filter: { employment_type : selectEmployment }"
+           data-ng-href="#!/salaries/{{salary._id}}" class="list-group-item">
 
-			<span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
-			<ul class="list-unstyled">
-				<li ng-if="salary.name"><strong>Name:</strong> {{ salary.name }}</li>
-				<li><strong>Gender:</strong> {{ salary.gender === 'f' ? 'Female' : 'Male' }}</li>
-				<li ng-if="salary.employment_type">
-					<strong>Employment:</strong> {{salary.employment_type === 'self_employed' ? 'Self Employed' : 'Permanent'}}
-				</li>
-			</ul>
-		</a>
-	</div>
+            <span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
+            <ul class="list-unstyled">
+                <li ng-if="salary.name"><strong>Name:</strong> {{ salary.name }}</li>
+                <li><strong>Gender:</strong> {{ salary.gender === 'f' ? 'Female' : 'Male' }}</li>
+                <li ng-if="salary.employment_type">
+                    <strong>Employment:</strong> {{salary.employment_type === 'self_employed' ? 'Self Employed' :
+                    'Permanent'}}
+                </li>
+            </ul>
+        </a>
+    </div>
 
-	<div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
-		No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
-	</div>
+    <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
+        No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
+    </div>
 </section>

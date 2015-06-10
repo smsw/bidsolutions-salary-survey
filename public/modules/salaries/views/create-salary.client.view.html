@@ -8,55 +8,185 @@
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Joe Bloggs" required>
                     </div>
                 </div>
-	            <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label" for="salary">Salary</label>
                     <div class="controls">
-                        <input type="number" data-ng-model="salary" id="salary" class="form-control" placeholder="Salary" required>
+                        <input type="number" data-ng-model="salary" id="salary" class="form-control" placeholder="25000" required>
                     </div>
                 </div>
-	            <div class="form-group">
+
+                <div class="form-group">
                     <label class="control-label" for="bonus">Bonus</label>
                     <div class="controls">
-                        <input type="number" data-ng-model="bonus" id="bonus" class="form-control" placeholder="Bonus" required>
+                        <input type="number" data-ng-model="bonus" id="bonus" class="form-control" placeholder="2100" required>
                     </div>
                 </div>
-	            <div class="form-group">
+
+                <div class="form-group">
+                    <label class="control-label" for="total_value">Total Package Value</label>
+                    <div class="controls">
+                        <input type="number" data-ng-model="total_value" id="total_value" class="form-control" placeholder="1800" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="day_charge_rate">Current Day/Charge Rate</label>
+                    <div class="controls">
+                        <input type="number" data-ng-model="day_charge_rate" id="day_charge_rate" class="form-control" placeholder="400" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="total_contract_earnings">Total Contract Earnings</label>
+                    <div class="controls">
+                        <input type="number" data-ng-model="total_contract_earnings" id="total_contract_earnings" class="form-control" placeholder="65000" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="bs_job_title">BS Job Title</label>
+                    <div class="controls">
+                        <select id="bs_job_title" data-ng-model="bs_job_title" class="form-control" required>
+                            <option value="Bid Manager">Bid Manager</option>
+                            <option value="Document Manager">Document Manager</option>
+                            <option value="Graphic Designer">Graphic Designer</option>
+                            <option value="Head of Bid Management">Head of Bid Management</option>
+                            <option value="Head of Proposal Management">Head of Proposal Management</option>
+                            <option value="Knowledgebase Manager">Knowledgebase Manager</option>
+                            <option value="Proposal Manager">Proposal Manager</option>
+                            <option value="Proposal Writer">Proposal Writer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="contract_job_title">Contract Job Title</label>
+                    <div class="controls">
+                        <select id="contract_job_title" data-ng-model="contract_job_title" class="form-control" required>
+                            <option value="Bid Manager">Bid Manager</option>
+                            <option value="Document Manager">Document Manager</option>
+                            <option value="Graphic Designer">Graphic Designer</option>
+                            <option value="Proposal Manager">Proposal Manager</option>
+                            <option value="Proposal Writer">Proposal Writer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="highest_education">Highest Education</label>
+                    <div class="controls">
+                        <select id="highest_education" data-ng-model="highest_education" class="form-control" required>
+                            <option value="A Level or Equivalent">A Level or Equivalent</option>
+                            <option value="achelors Degree">Bachelors Degree</option>
+                            <option value="GCSE or Equivalent">GCSE or Equivalent</option>
+                            <option value="HND / HNC or Equivalent">HND / HNC or Equivalent</option>
+                            <option value="Masters Degree">Masters Degree</option>
+                            <option value="Ph.D">Ph.D</option>
+                            <option value="Vocational">Vocational</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="industry_experience">Industry Experience</label>
+                    <div class="controls">
+                        <select id="industry_experience" data-ng-model="industry_experience" class="form-control" required>>
+                            <option value="10+ years experience.">10+ years experience.</option>
+                            <option value="2-5 years experience.">2-5 years experience.</option>
+                            <option value="20+ years experience.">20+ years experience.</option>
+                            <option value="30+ years experience.">30+ years experience.</option>
+                            <option value="40+ years experience.">40+ years experience.</option>
+                            <option value="5+ years experience.">5+ years experience.</option>
+                            <option value="Up to 2 years experience.">Up to 2 years experience.</option>
+                            <option value="Apprentice">Apprentice</option>
+                            <option value="Graduate">  Graduate / school leaver. Less than 12 months experience.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="control-label" for="gender">Gender</label>
                     <div class="controls">
-	                    <select id="gender" data-ng-model="gender" class="form-control" required>
-		                    <option value="m">Male</option>
-		                    <option value="f">Female</option>
-	                    </select>
+                        <select id="gender" data-ng-model="gender" class="form-control" required>
+                            <option value="m">Male</option>
+                            <option value="f">Female</option>
+                        </select>
                     </div>
                 </div>
-	            <div class="form-group">
-                    <label class="control-label" for="location">Location</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="employment_location" id="employment_location" class="form-control" placeholder="Location" required>
-                    </div>
-                </div>
+
                 <div class="form-group">
-                    <label class="control-label" for="employment_type">Gender</label>
+                    <label class="control-label" for="age">Age</label>
                     <div class="controls">
-	                    <select id="employment_type" data-ng-model="employment_type" class="form-control" required>
-		                    <option value="permanent">Permanent</option>
-		                    <option value="self_employed">Self Employed</option>
-	                    </select>
+                        <input type="number" data-ng-model="age" id="age" class="form-control" placeholder="25" required>
                     </div>
                 </div>
-	            <div class="form-group">
-                    <label class="control-label" for="working_practice">Working Practice</label>
+
+                <div class="form-group">
+                    <label class="control-label" for="employment_location">Location</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="working_practice" id="working_practice" class="form-control" placeholder="Working Practice" required>
+                        <select id="employment_location" data-ng-model="employment_location" class="form-control" required>
+                            <option value="East Midlands">East Midlands</option>
+                            <option value="East Of England">East Of England</option>
+                            <option value="Field Based - No Primary Location">Field Based - No Primary Location</option>
+                            <option value="Greater London">Greater London</option>
+                            <option value="North East England<">North East England</option>
+                            <option value="North Wales<">North Wales</option>
+                            <option value="North West England">North West England</option>
+                            <option value="Northern Ireland">Northern Ireland</option>
+                            <option value="Northern Scotland">Northern Scotland</option>
+                            <option value="South East England">South East England</option>
+                            <option value="South Wales">South Wales</option>
+                            <option value="South West England">South West England</option>
+                            <option value="Southern Scotland">Southern Scotland</option>
+                            <option value="West Midlands">West Midlands</option>
+                            <option value="Yorkshire And The Humber">Yorkshire And The Humber</option>
+                        </select>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="primary_industry">Primary Industry</label>
+                    <div class="controls">
+                        <select id="primary_industry" data-ng-model="primary_industry" class="form-control" required>
+                            <option value="Banking & Finance">Banking & Finance</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Defence & Security">Defence & Security</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Health & Medical">Health & Medical</option>
+                            <option value="IT">IT</option>
+                            <option value="Manufacturing & Logisitics">Manufacturing & Logisitics</option>
+                            <option value="Multiple">Multiple</option>
+                            <option value="Outsourcing / BPO">Outsourcing / BPO</option>
+                            <option value="Professional Services & Property">Professional Services & Property</option>
+                            <option value="Public Sector">Public Sector</option>
+                            <option value="Recruitment">Recruitment</option>
+                            <option value="Telco & Utilities">Telco & Utilities</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="employment_status">Employment Status</label>
+                    <div class="controls">
+                        <select id="employment_status" data-ng-model="employment_status" class="form-control" required>
+                            <option value="Long-term Unemployed (>12 months)">Long-term Unemployed (>12 months)</option>
+                            <option value="Permanent">Permanent</option>
+                            <option value="Recently Unemployed (<12 months)">Recently Unemployed (<12 months)</option>
+                            <option value="Self-Employed, Independent Consultant or Freelance">Self-Employed, Independent Consultant or Freelance</option>
+                            <option value="Temporary Employee or Fixed Term Contract">Temporary Employee or Fixed Term Contract</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
                 </div>
-				<div data-ng-show="error" class="text-danger">
+
+                <div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
             </fieldset>

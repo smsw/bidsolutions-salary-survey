@@ -10,10 +10,9 @@ angular.module('salaries')
         },
 
         link: function (scope, element, attrs) {
-          console.log(2);
           var chart = new Highcharts.Chart({
             chart: {
-              renderTo: 'container',
+              renderTo: 'container'
             },
             title: {
               text: 'Salary by gender'
