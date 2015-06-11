@@ -19,32 +19,21 @@
 
     </div>
 
-    <br>
 
-    <salary-chart data="filtered"></salary-chart>
 
-    <pre>
-        {{ salaries | json }}
-    </pre>
+    <div class="row">
+        <div class="col-md-6">
+            <salary-chart data="filtered"></salary-chart>
+        </div>
 
-    <h4>Results</h4>
-    <hr>
-
-    <div class="list-group">
-        <a data-ng-repeat="salary in salaries | filter : {gender : selectGender } | filter: { employment_type : selectEmployment }"
-           data-ng-href="#!/salaries/{{salary._id}}" class="list-group-item">
-
-            <span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
-            <ul class="list-unstyled">
-                <li ng-if="salary.name"><strong>Name:</strong> {{ salary.name }}</li>
-                <li><strong>Gender:</strong> {{ salary.gender === 'f' ? 'Female' : 'Male' }}</li>
-                <li ng-if="salary.employment_type">
-                    <strong>Employment:</strong> {{salary.employment_type === 'self_employed' ? 'Self Employed' :
-                    'Permanent'}}
-                </li>
-            </ul>
-        </a>
+        <div class="col-md-6">
+            <salary-chart data="filtered"></salary-chart>
+        </div>
     </div>
+
+
+
+    <pre>{{ salaries | json }}</pre>
 
     <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
         No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?

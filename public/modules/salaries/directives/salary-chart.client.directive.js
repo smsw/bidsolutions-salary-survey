@@ -12,14 +12,14 @@ angular.module('salaries')
         link: function (scope, element, attrs) {
           var chart = new Highcharts.Chart({
             chart: {
-              renderTo: 'container'
+              renderTo: element[0]
             },
             title: {
-              text: 'Salary by gender'
+              text: ''
             },
             series: [{
               type: 'pie',
-              name: 'Salary',
+              name: 'Respondents',
               data: scope.data
             }]
           });
@@ -28,6 +28,6 @@ angular.module('salaries')
           }, true);
         },
 
-        template: '<div id="container">Error</div>'
+        template: '<div>Error</div>'
       }
     });

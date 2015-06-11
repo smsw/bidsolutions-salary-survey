@@ -38,8 +38,8 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
                 $scope.bonus = '';
                 $scope.gender = '';
                 $scope.employment_location = '';
-                $scope.employment_type= '';
-                $scope.employment_role= '';
+                $scope.employment_type = '';
+                $scope.employment_role = '';
             }, function (errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
@@ -85,13 +85,25 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
             });
         };
 
+        // Return length of object
+        $scope.count = function (data) {
+            return data.length;
+        };
 
 
-        // Simple Class to retrieve Data from our app
+
+
+
+
+        // Simple Class ref to retrieve Data from our app
         var Salary = Salaries.query();
 
         // Store Re-Arranged Salary Data
         $scope.chartData = [];
+
+
+
+
 
 
         // When we have data, arrange into a format HighCharts can understand
@@ -100,25 +112,50 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
                 angular.forEach(data, function (value, key) {
                     this.push({name: value.name, y: value.salary, gender: value.gender});
                 }, $scope.chartData);
-                console.log('Promise:', $scope.chartData);
+
+                $scope.filtered = $scope.genderTotal(data);
             });
         };
         $scope.initHighChartsData(); // Run just the once.
 
 
+
+
+
+
+
+        $scope.genderTotal = function (data) {
+            $scope.genderByNumbers = [];
+
+            var females = 0, males = 0;
+            angular.forEach(data, function (value, key) {
+
+                // Calculate number of males and females and push into object.
+                if (value.gender === 'f') {
+                    females += 1
+                } else if (value.gender === 'm') {
+                    males += 1
+                }
+            }, $scope.genderByNumbers);
+
+            $scope.genderByNumbers.push(
+                {name: 'Male', gender: 'm', y: males},
+                {name: 'Female', gender: 'f', y: females}
+            );
+
+            return $scope.genderByNumbers;
+        };
+
+
+
+
+
+
         // Adjust filters
         $scope.filterUpdate = function () {
             Salary.$promise.then(function () {
-                // Log to make sure we're doing something
-                console.log('We are making a change to the filters...');
-
-                // Copy original data so we don't end up with duplicate values in view
-                $scope.copiedChartData = angular.copy($scope.chartData);
-
-                // Salary Filters, the models such as salary.gender, salary.employment_type etc.
-                var salaryFilterObj = $scope.salary;
-                $scope.filtered = $filter('filter')($scope.copiedChartData, salaryFilterObj);
-
+                $scope.copiedChartData = angular.copy($scope.genderByNumbers);
+                $scope.filtered = $filter('filter')($scope.copiedChartData, $scope.salary);
             });
         };
 
