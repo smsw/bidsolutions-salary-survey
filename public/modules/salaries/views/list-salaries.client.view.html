@@ -1,30 +1,41 @@
-<section ng-controller="SalariesController" data-ng-init="find()">
+<section data-ng-controller="SalariesController" data-ng-init="find()">
     <div class="page-header">
         <h1>Salaries</h1>
     </div>
 
-	<ul class="list-unstyled">
-		<li><h3>Average Salary {{salaries | averageSalary | currency}}</h3></li>
-	</ul>
 
-    <highchart id="avgSalary" config="chartConfig"></highchart>
+    <h4>Filters</h4>
+    <hr>
 
-    <div class="list-group">
-        <a data-ng-repeat="salary in salaries" data-ng-href="#!/salaries/{{salary._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="salary.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="salary.user.displayName"></span>
-			</small>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="gender">Gender</label>
+            <select data-ng-model="salary.gender" ng-change="filterUpdate()" class="form-control" id="gender">
+                <option value=""> - Select all -</option>
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+            </select>
+        </div>
 
-	        <span data-ng-bind="salary.salary | currency" class="pull-right">{{salary.salary}}</span>
-
-			<h4 class="list-group-item-heading" data-ng-bind="salary.name"></h4>
-        </a>
     </div>
+
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <salary-chart data="filtered"></salary-chart>
+        </div>
+
+        <div class="col-md-6">
+            <salary-chart data="filtered"></salary-chart>
+        </div>
+    </div>
+
+
+
+    <pre>{{ salaries | json }}</pre>
+
     <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
-    	No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
+        No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
     </div>
 </section>
-

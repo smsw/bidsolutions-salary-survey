@@ -4,8 +4,9 @@
 angular.module('salaries')
 
     .factory('Salaries', ['$resource',
-        function($resource) {
-            return $resource('salaries/:salaryId', { salaryId: '@_id'
+        function ($resource) {
+            return $resource('salaries/:salaryId', {
+                salaryId: '@_id'
             }, {
                 update: {
                     method: 'PUT'

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('salaries')
-    .filter('averageSalary', [
+    .filter('calcAvg',
         function () {
             return function (input) {
                 // Calculate Average Salary
@@ -14,5 +14,11 @@ angular.module('salaries')
 
                 return totalSalary / salaries.length;
             };
-    }]
-);
+        }
+    )
+    .filter('testFilter', function (){
+
+       return function(input) {
+       }
+
+    });
