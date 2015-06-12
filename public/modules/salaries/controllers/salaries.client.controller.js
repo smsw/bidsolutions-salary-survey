@@ -5,6 +5,8 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
     function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
         $scope.authentication = Authentication;
 
+        var Salary = Salaries.query();
+
         // Create new Salary
         $scope.create = function () {
             // Create new Salary object
@@ -85,80 +87,78 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
             });
         };
 
-        // Return length of object
-        $scope.count = function (data) {
-            return data.length;
-        };
-
-
-
-
-
-
-        // Simple Class ref to retrieve Data from our app
-        var Salary = Salaries.query();
-
-        // Store Re-Arranged Salary Data
-        $scope.chartData = [];
-
-
-
-
-
-
-        // When we have data, arrange into a format HighCharts can understand
-        $scope.initHighChartsData = function () {
+        // Called on the view with ng-init
+        // When Data is ready, run functions that require our promised data
+        $scope.initSalaryFunctions = function () {
             Salary.$promise.then(function (data) {
-                angular.forEach(data, function (value, key) {
-                    this.push({name: value.name, y: value.salary, gender: value.gender});
-                }, $scope.chartData);
 
-                $scope.filtered = $scope.genderTotal(data);
+                // Check All data is here
+                console.log('All data', data);
+
+                // Sort data by job title
+                console.log('By job title', $scope.filterData('Document Manager','bs_job_title', data));
+
+                // Example of putting Document manager results into DataColumn[]
+                $scope.populateDataColumn($scope.filterData('Document Manager','bs_job_title', data));
             });
         };
-        $scope.initHighChartsData(); // Run just the once.
 
+        /***
+         * Filter data by various params
+         * @param filter
+         * @param prop
+         * @param data
+         * @returns {Array}
+         */
+        $scope.filterData = function (filter, prop, data) {
+            var result = [];
 
-
-
-
-
-
-        $scope.genderTotal = function (data) {
-            $scope.genderByNumbers = [];
-
-            var females = 0, males = 0;
             angular.forEach(data, function (value, key) {
-
-                // Calculate number of males and females and push into object.
-                if (value.gender === 'f') {
-                    females += 1
-                } else if (value.gender === 'm') {
-                    males += 1
+                if (value[prop] === filter) {
+                    result.push(value);
                 }
-            }, $scope.genderByNumbers);
-
-            $scope.genderByNumbers.push(
-                {name: 'Male', gender: 'm', y: males},
-                {name: 'Female', gender: 'f', y: females}
-            );
-
-            return $scope.genderByNumbers;
-        };
-
-
-
-
-
-
-        // Adjust filters
-        $scope.filterUpdate = function () {
-            Salary.$promise.then(function () {
-                $scope.copiedChartData = angular.copy($scope.genderByNumbers);
-                $scope.filtered = $filter('filter')($scope.copiedChartData, $scope.salary);
             });
+            return result;
         };
 
+
+        /***
+         * Populate DataColumn Model with our results
+         * @param data
+         * @returns {Number}
+         */
+        $scope.populateDataColumn = function (data) {
+            $scope.dataColumns = [];
+            return $scope.dataColumns.push
+            (
+                {
+                    name: 'Document Manager',
+                    salary: {
+                        minimum: null,
+                        average: null,
+                        median: null,
+                        maximum: null
+                    },
+                    average_age: null,
+                    raw: data
+                }
+            );
+        };
+
+
+        // Example model for our Data columns we require
+        $scope.exampleDataColumModel = [
+            {
+                "name": "Document Manager",
+                "salary": {
+                    minimum: 100,
+                    average: 200,
+                    median: 300,
+                    maximum: 400
+                },
+                "average_age": 35
+            }
+        ];
     }
 ]);
 

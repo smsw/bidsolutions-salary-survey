@@ -1,11 +1,27 @@
-<section data-ng-controller="SalariesController" data-ng-init="find()">
+<section data-ng-controller="SalariesController" data-ng-init="initSalaryFunctions()">
     <div class="page-header">
         <h1>Salaries</h1>
     </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <h3>raw_data</h3>
+            <pre>
+            </pre>
+        </div>
 
-    <h4>Filters</h4>
-    <hr>
+        <div class="col-md-6">
+            <h3>data_columns</h3>
+            <pre>
+                {{ dataColumns | json }}
+            </pre>
+        </div>
+    </div>
+
+
+
+
+    <h3>Redundant for now</h3>
 
     <div class="row">
         <div class="col-md-4">
@@ -16,24 +32,9 @@
                 <option value="f">Female</option>
             </select>
         </div>
-
     </div>
 
-
-
-    <div class="row">
-        <div class="col-md-6">
-            <salary-chart data="filtered"></salary-chart>
-        </div>
-
-        <div class="col-md-6">
-            <salary-chart data="filtered"></salary-chart>
-        </div>
-    </div>
-
-
-
-    <pre>{{ salaries | json }}</pre>
+    <salary-chart data="filtered"></salary-chart>
 
     <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
         No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
