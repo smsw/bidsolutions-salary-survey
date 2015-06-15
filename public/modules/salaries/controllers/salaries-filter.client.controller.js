@@ -30,15 +30,16 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                 var dataByJobTitles = [];
                 angular.forEach(jobTitlesArr, function (value, key) {
                     dataByJobTitles.push(
-                        [
-                            {name: value.name},
-                            {
-                                salary: {
-                                    average: $scope.calculateAverage('salary', $scope.filterData(value.name, 'bs_job_title', data))
-                                },
-                                average_age: $scope.calculateAverage('age', $scope.filterData(value.name, 'bs_job_title', data))
-                            }
-                        ]
+                        {
+                            name: value.name,
+                            salary: {
+                                average: $scope.calculateAverage('salary', $scope.filterData(value.name, 'bs_job_title', data))
+                            },
+                            average_age: $scope.calculateAverage('age', $scope.filterData(value.name, 'bs_job_title', data)),
+                            median: null,
+                            maximum: $scope.calculateMinMaxValue('max', $scope.filterData(value.name, 'bs_job_title', data)),
+                            minimum: $scope.calculateMinMaxValue('min', $scope.filterData(value.name, 'bs_job_title', data))
+                        }
                     );
                 });
 
@@ -63,7 +64,6 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             });
             return result;
         };
-
 
         /***
          * Populate DataColumn Model with our results
@@ -96,20 +96,23 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             return Math.floor(totalValue / data.length);
         };
 
+        /***
+         * Calculate Min/Max Value
+         * @param prop
+         * @param data
+         * @returns {*}
+         */
+        $scope.calculateMinMaxValue = function (prop, data) {
 
-        // Example model for our Data columns we require
-        $scope.exampleDataColumModel = [
-            {
-                "name": "Document Manager",
-                "salary": {
-                    minimum: 100,
-                    average: 200,
-                    median: 300,
-                    maximum: 400
-                },
-                "average_age": 35
-            }
-        ];
-
+            var values = data.map(function (o) {
+                // Pluck Salary values only
+                return o.salary;
+            })
+                // Filter out null as that gives a value of 0
+                .filter(function (val) {
+                    return val !== null
+                });
+            return Math[prop].apply(Math, values);
+        };
     }
 ]);
