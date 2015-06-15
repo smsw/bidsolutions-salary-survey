@@ -12,12 +12,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
         $scope.initSalaryFunctions = function () {
             Salary.$promise.then(function (data) {
 
-                // Check All data is here
-                console.log('All data', data);
-                // Sort data by job title
-                console.log('By job title', $scope.filterData('Document Manager', 'bs_job_title', data));
-                // Output average salary based on a job title
-                console.log('Average Salary', $scope.calculateAverage('salary', $scope.filterData('Document Manager', 'bs_job_title', data)));
+                $scope.rawData = data;
 
                 // Store job titles to iterate over
                 // We could also iterate over the existing data and pull a unique list of job titles instead...
@@ -98,7 +93,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             });
 
             // divide by how many numbers and return value
-            return totalValue / data.length;
+            return Math.floor(totalValue / data.length);
         };
 
 
