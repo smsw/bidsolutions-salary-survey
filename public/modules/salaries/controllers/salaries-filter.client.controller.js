@@ -36,7 +36,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                                 average: $scope.calculateAverage('salary', $scope.filterData(value.name, 'bs_job_title', data))
                             },
                             average_age: $scope.calculateAverage('age', $scope.filterData(value.name, 'bs_job_title', data)),
-                            median: null,
+                            median: $scope.calculateMedian($scope.filterData(value.name, 'bs_job_title', data)),
                             maximum: $scope.calculateMinMaxValue('max', $scope.filterData(value.name, 'bs_job_title', data)),
                             minimum: $scope.calculateMinMaxValue('min', $scope.filterData(value.name, 'bs_job_title', data))
                         }
@@ -103,16 +103,41 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
          * @returns {*}
          */
         $scope.calculateMinMaxValue = function (prop, data) {
-
             var values = data.map(function (o) {
                 // Pluck Salary values only
                 return o.salary;
             })
+            .filter(function (val) {
                 // Filter out null as that gives a value of 0
-                .filter(function (val) {
-                    return val !== null
-                });
+                return val !== null
+            });
+
             return Math[prop].apply(Math, values);
         };
+
+        /***
+         * Calculate Median
+         * https://gist.github.com/caseyjustus/1166258
+         * @param prop
+         * @returns {*}
+         */
+        $scope.calculateMedian = function (data) {
+
+            var values = data.map(function (o) {
+                // Pluck Salary values only
+                return o.salary;
+            });
+
+            values.sort(function (a, b) {
+                return a - b;
+            });
+
+            var half = Math.floor(values.length / 2);
+
+            if (values.length % 2)
+                return values[half];
+            else
+                return (values[half - 1] + values[half]) / 2.0;
+        }
     }
 ]);
