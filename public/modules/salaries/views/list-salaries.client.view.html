@@ -3,21 +3,7 @@
         <h1>Salaries</h1>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h3>raw_data</h3>
-            <pre>
-                {{ rawData | json }}
-            </pre>
-        </div>
-
-        <div class="col-md-6">
-            <h3>data_columns</h3>
-            <pre>
-                {{ dataColumns | json }}
-            </pre>
-        </div>
-    </div>
+    <salary-barchart chart-data="dataColumns" class="col-md-12"></salary-barchart>
 
     <h3>Redundant for now</h3>
 

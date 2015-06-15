@@ -71,11 +71,80 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
          * @returns {Number}
          */
         $scope.populateDataColumn = function (data) {
+            /*
             $scope.dataColumns = [];
+
             return $scope.dataColumns.push
             (
                 data
             );
+            */
+
+            // Suited Format for HighCharts
+            $scope.dataColumns = [
+                {
+                    name: 'Minimum Basic Salary',
+                    type: 'column',
+                    yAxis: 1,
+                    // Goes in order of Categories
+                    data: $scope.pickData('salary','minimum',data),
+                    tooltip: {
+                        valueSuffix: '(GBP)'
+                    }
+                },
+                {
+                    name: 'Average Basic Salary',
+                    type: 'column',
+                    yAxis: 1,
+                    data:  $scope.pickData('salary','average',data),
+                    tooltip: {
+                        valueSuffix: '(GBP)'
+                    }
+                },
+                {
+                    name: 'Median Basic Salary',
+                    type: 'column',
+                    yAxis: 1,
+                    data: $scope.pickData('salary','median',data),
+                    tooltip: {
+                        valueSuffix: '(GBP)'
+                    }
+                },
+                {
+                    name: 'Maximum Basic Salary',
+                    type: 'column',
+                    yAxis: 1,
+                    data: $scope.pickData('salary','maximum',data),
+                    tooltip: {
+                        valueSuffix: '(GBP)'
+                    }
+                },
+                {
+                    name: 'Average Age',
+                    type: 'spline',
+                    data: $scope.pickData('average_age','',data),
+                    tooltip: {
+                        valueSuffix: ''
+                    }
+                }
+            ];
+        };
+
+        /***
+         * Pick a property and return its values
+         * @param prop
+         * @param type
+         * @param data
+         * @returns {*}
+         */
+        $scope.pickData = function (prop, type, data) {
+            return data.map(function (o) {
+                if(type !== ''){
+                    return o[prop][type];
+                }else {
+                    return o[prop];
+                }
+            });
         };
 
         /***
