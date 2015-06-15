@@ -33,12 +33,12 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                         {
                             name: value.name,
                             salary: {
-                                average: $scope.calculateAverage('salary', $scope.filterData(value.name, 'bs_job_title', data))
+                                average: $scope.calculateAverage('salary', $scope.filterData(value.name, 'bs_job_title', data)),
+                                median: $scope.calculateMedian($scope.filterData(value.name, 'bs_job_title', data)),
+                                maximum: $scope.calculateMinMaxValue('max', $scope.filterData(value.name, 'bs_job_title', data)),
+                                minimum: $scope.calculateMinMaxValue('min', $scope.filterData(value.name, 'bs_job_title', data))
                             },
-                            average_age: $scope.calculateAverage('age', $scope.filterData(value.name, 'bs_job_title', data)),
-                            median: $scope.calculateMedian($scope.filterData(value.name, 'bs_job_title', data)),
-                            maximum: $scope.calculateMinMaxValue('max', $scope.filterData(value.name, 'bs_job_title', data)),
-                            minimum: $scope.calculateMinMaxValue('min', $scope.filterData(value.name, 'bs_job_title', data))
+                            average_age: $scope.calculateAverage('age', $scope.filterData(value.name, 'bs_job_title', data))
                         }
                     );
                 });
