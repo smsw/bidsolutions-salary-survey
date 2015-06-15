@@ -18,6 +18,8 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
 				// Sort data by job title
 				console.log('By job title', $scope.filterData('Document Manager','bs_job_title', data));
 
+				console.log('Average Salary', $scope.calculateAverage('salary',$scope.filterData('Document Manager','bs_job_title', data)));
+
 				// Example of putting Document manager results into DataColumn[]
 				$scope.populateDataColumn($scope.filterData('Document Manager','bs_job_title', data));
 			});
@@ -64,6 +66,25 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
 				}
 			);
 		};
+
+		/***
+		 * Calculate Average
+		 * @param data
+		 * @returns {number}
+		 */
+		$scope.calculateAverage = function (prop, data) {
+			// add up all numbers
+			var totalValue = 0;
+
+			// Iterate over property and add value
+			angular.forEach(data, function(value, key){
+				totalValue += value[prop];
+			});
+
+			// divide by how many numbers and return value
+			return totalValue / data.length;
+		};
+
 
 
 		// Example model for our Data columns we require
