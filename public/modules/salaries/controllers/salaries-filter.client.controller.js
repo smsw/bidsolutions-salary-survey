@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Salaries',
-    function ($scope, Salaries) {
+angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Salaries', '$filter', '$q',
+    function ($scope, Salaries, $filter, $q) {
         // Salaries filter controller logic
         // ...
 
@@ -9,10 +9,16 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
 
         // Called on the view with ng-init
         // When Data is ready, run functions that require our promised data
-        $scope.initSalaryFunctions = function () {
+        $scope.initSalaryFunctions = function (newData) {
             Salary.$promise.then(function (data) {
 
-                $scope.rawData = data;
+                if (newData) {
+                    console.log('New data has come in', newData);
+                    data = newData;
+                } else {
+                    console.log('Using data with no filters', data);
+                    $scope.rawData = data;
+                }
 
                 // Store job titles to iterate over
                 // We could also iterate over the existing data and pull a unique list of job titles instead...
@@ -42,7 +48,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                         }
                     );
                 });
-
+                console.log('Populate our graph;', dataByJobTitles);
                 $scope.populateDataColumn(dataByJobTitles);
             });
         };
@@ -72,13 +78,14 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
          */
         $scope.populateDataColumn = function (data) {
             /*
-            $scope.dataColumns = [];
+             $scope.dataColumns = [];
 
-            return $scope.dataColumns.push
-            (
-                data
-            );
-            */
+             return $scope.dataColumns.push
+             (
+             data
+             );
+             */
+
 
             // Suited Format for HighCharts
             $scope.dataColumns = [
@@ -87,7 +94,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                     type: 'column',
                     yAxis: 1,
                     // Goes in order of Categories
-                    data: $scope.pickData('salary','minimum',data),
+                    data: $scope.pickData('salary', 'minimum', data),
                     tooltip: {
                         valueSuffix: '(GBP)'
                     }
@@ -96,7 +103,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                     name: 'Average Basic Salary',
                     type: 'column',
                     yAxis: 1,
-                    data:  $scope.pickData('salary','average',data),
+                    data: $scope.pickData('salary', 'average', data),
                     tooltip: {
                         valueSuffix: '(GBP)'
                     }
@@ -105,7 +112,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                     name: 'Median Basic Salary',
                     type: 'column',
                     yAxis: 1,
-                    data: $scope.pickData('salary','median',data),
+                    data: $scope.pickData('salary', 'median', data),
                     tooltip: {
                         valueSuffix: '(GBP)'
                     }
@@ -114,7 +121,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                     name: 'Maximum Basic Salary',
                     type: 'column',
                     yAxis: 1,
-                    data: $scope.pickData('salary','maximum',data),
+                    data: $scope.pickData('salary', 'maximum', data),
                     tooltip: {
                         valueSuffix: '(GBP)'
                     }
@@ -122,7 +129,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                 {
                     name: 'Average Age',
                     type: 'spline',
-                    data: $scope.pickData('average_age','',data),
+                    data: $scope.pickData('average_age', '', data),
                     tooltip: {
                         valueSuffix: ''
                     }
@@ -138,11 +145,12 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
          * @returns {*}
          */
         $scope.pickData = function (prop, type, data) {
+
             return data.map(function (o) {
-                if(type !== ''){
+                if (type !== '') {
                     return o[prop][type];
-                }else {
-                    return o[prop];
+                } else {
+                    return parseInt(o[prop]) || 0;
                 }
             });
         };
@@ -162,7 +170,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             });
 
             // divide by how many numbers and return value
-            return Math.floor(totalValue / data.length);
+            return parseInt(Math.floor(totalValue / data.length)) || 0;
         };
 
         /***
@@ -176,12 +184,12 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                 // Pluck Salary values only
                 return o.salary;
             })
-            .filter(function (val) {
-                // Filter out null as that gives a value of 0
-                return val !== null
-            });
+                .filter(function (val) {
+                    // Filter out null as that gives a value of 0
+                    return val !== null
+                });
 
-            return Math[prop].apply(Math, values);
+            return parseInt(Math[prop].apply(Math, values)) || 0;
         };
 
         /***
@@ -200,13 +208,21 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             values.sort(function (a, b) {
                 return a - b;
             });
-
             var half = Math.floor(values.length / 2);
 
             if (values.length % 2)
-                return values[half];
+                return parseInt(values[half]) || 0;
             else
-                return (values[half - 1] + values[half]) / 2.0;
-        }
+                return parseInt((values[half - 1] + values[half]) / 2.0) || 0;
+        };
+
+        /***
+         * Filter Update
+         * Called when ng-change is detected
+         */
+        $scope.filterUpdate = function () {
+            $scope.copiedChartData = angular.copy($scope.rawData);
+            $scope.initSalaryFunctions($filter('filter')($scope.copiedChartData, $scope.salary));
+        };
     }
 ]);

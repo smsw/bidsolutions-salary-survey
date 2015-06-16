@@ -86,5 +86,3 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
         };
     }
 ]);
-
-

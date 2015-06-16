@@ -10,28 +10,24 @@ angular.module('salaries').directive('salaryBarchart', [
             },
             link: function (scope, element, attrs) {
 
-                scope.$watch('chartData', function (newVal,oldVal) {
-                    if (newVal) {
-                        drawPlot();
-                    }
-                }, true);
+                scope.$watch('chartData', function () {
+                    drawPlot();
+                });
 
                 var drawPlot = function() {
                     var chart = new Highcharts.Chart({
                         chart: {
-                            zoomType: 'xy',
                             renderTo: element[0]
                         },
                         title: {
-                            text: 'Salary Survey'
+                            text: ' '
                         },
                         subtitle: {
-                            text: 'Source: Bid Solutions'
+                            text: ''
                         },
                         xAxis: [{
                             categories: ['Bid Manager', 'Document Manager', 'Graphic Designer', 'Head of Bid Management',
-                                'Head of Proposal Management', 'Knowledgebase Manager', 'Proposal Manager', 'Proposal Writer'],
-                            crosshair: true
+                                'Head of Proposal Management', 'Knowledgebase Manager', 'Proposal Manager', 'Proposal Writer']
                         }],
                         yAxis: [
                             { // Primary yAxis
@@ -68,11 +64,11 @@ angular.module('salaries').directive('salaryBarchart', [
                             shared: true
                         },
                         legend: {
-                            layout: 'vertical',
-                            align: 'left',
-                            x: 120,
+                            layout: 'horizontal',
+                            align: 'center',
+                            x: 0,
+                            y: 20,
                             verticalAlign: 'top',
-                            y: 100,
                             floating: true,
                             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                         },
