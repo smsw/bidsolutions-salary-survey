@@ -10,69 +10,67 @@ angular.module('salaries').directive('salaryBarchart', [
             },
             link: function (scope, element, attrs) {
 
-                scope.$watch('chartData', function (newVal,oldVal) {
-                    if (newVal) {
-                        drawPlot();
-                    }
-                }, true);
+                scope.$watch('chartData', function () {
+                    drawPlot();
+                });
 
                 var drawPlot = function() {
                     var chart = new Highcharts.Chart({
                         chart: {
-                            zoomType: 'xy',
                             renderTo: element[0]
                         },
                         title: {
-                            text: 'Salary Survey'
+                            text: ' '
                         },
                         subtitle: {
-                            text: 'Source: Bid Solutions'
+                            text: ''
                         },
                         xAxis: [{
                             categories: ['Bid Manager', 'Document Manager', 'Graphic Designer', 'Head of Bid Management',
-                                'Head of Proposal Management', 'Knowledgebase Manager', 'Proposal Manager', 'Proposal Writer'],
-                            crosshair: true
+                                'Head of Proposal Management', 'Knowledgebase Manager', 'Proposal Manager', 'Proposal Writer']
                         }],
                         yAxis: [
-                            { // Primary yAxis
+                            { // Secondary yAxis
 
                                 title: {
                                     text: 'Age',
                                     style: {
-                                        color: Highcharts.getOptions().colors[0]
+                                        color: Highcharts.getOptions().colors[1]
                                     }
                                 },
                                 labels: {
                                     format: '{value}',
                                     style: {
-                                        color: Highcharts.getOptions().colors[0]
-                                    }
-                                }
-                            },
-                            { // Secondary yAxis
-                                labels: {
-                                    format: '£ {value}',
-                                    style: {
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
+                                opposite: true
+                            },
+                            { // Secondary yAxis
+
                                 title: {
                                     text: 'GBP',
                                     style: {
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
-                            opposite: true
-                            }],
+                                labels: {
+                                    format: '£ {value}',
+                                    style: {
+                                        color: Highcharts.getOptions().colors[1]
+                                    }
+                                }
+                            }
+                        ],
                         tooltip: {
                             shared: true
                         },
                         legend: {
-                            layout: 'vertical',
-                            align: 'left',
-                            x: 120,
+                            layout: 'horizontal',
+                            align: 'center',
+                            x: 0,
+                            y: 20,
                             verticalAlign: 'top',
-                            y: 100,
                             floating: true,
                             backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
                         },

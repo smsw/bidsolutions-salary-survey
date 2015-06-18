@@ -7,8 +7,8 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.css'],
-		mochaTests: ['app/tests/**/*.js']
+		mochaTests: ['app/tests/**/*.js'],
+        clientLess: ['public/stylesheets/*.less']
 	};
 
 	// Project Configuration
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 			clientViews: {
 				files: watchFiles.clientViews,
 				options: {
-					livereload: true,
+					livereload: true
 				}
 			},
 			clientJS: {
@@ -41,14 +41,31 @@ module.exports = function(grunt) {
 					livereload: true
 				}
 			},
-			clientCSS: {
-				files: watchFiles.clientCSS,
-				tasks: ['csslint'],
-				options: {
-					livereload: true
-				}
+			//clientCSS: {
+			//	files: watchFiles.clientCSS,
+			//	tasks: ['csslint'],
+			//	options: {
+			//		livereload: true
+			//	}
+			//},
+			clientLess: {
+                files: watchFiles.clientLess,
+                tasks: ['less'],
+                option: {
+                    livereload: true
+                }
 			}
 		},
+        less: {
+            development: {
+                options: {
+                    compress: true,
+                },
+                files: {
+                    'public/dist/application.min.css': 'public/stylesheets/application.less'
+                }
+            }
+        },
 		jshint: {
 			all: {
 				src: watchFiles.clientJS.concat(watchFiles.serverJS),
@@ -57,14 +74,14 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		csslint: {
-			options: {
-				csslintrc: '.csslintrc',
-			},
-			all: {
-				src: watchFiles.clientCSS
-			}
-		},
+		//csslint: {
+		//	options: {
+		//		csslintrc: '.csslintrc',
+		//	},
+		//	all: {
+		//		src: watchFiles.clientCSS
+		//	}
+		//},
 		uglify: {
 			production: {
 				options: {
@@ -72,13 +89,6 @@ module.exports = function(grunt) {
 				},
 				files: {
 					'public/dist/application.min.js': 'public/dist/application.js'
-				}
-			}
-		},
-		cssmin: {
-			combine: {
-				files: {
-					'public/dist/application.min.css': '<%= applicationCSSFiles %>'
 				}
 			}
 		},
@@ -170,7 +180,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'less']);
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);

@@ -3,22 +3,72 @@
         <h1>Salaries</h1>
     </div>
 
-    <salary-barchart chart-data="dataColumns" class="col-md-12"></salary-barchart>
-
-    <h3>Redundant for now</h3>
-
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <label for="gender">Gender</label>
-            <select data-ng-model="salary.gender" ng-change="filterUpdate()" class="form-control" id="gender">
+            <select data-ng-model="salary.gender" data-ng-change="filterUpdate()" class="form-control" id="gender">
                 <option value=""> - Select all -</option>
                 <option value="m">Male</option>
                 <option value="f">Female</option>
             </select>
         </div>
+        <div class="col-md-3">
+            <label for="location">Location</label>
+            <select data-ng-model="salary.employment_location" data-ng-change="filterUpdate()" class="form-control" id="location">
+                <option value=""> - Select all -</option>
+                <option value="East Midlands">East Midlands</option>
+                <option value="East Of England">East Of England</option>
+                <option value="Field Based - No Primary Location">Field Based - No Primary Location</option>
+                <option value="Greater London">Greater London</option>
+                <option value="North East England<">North East England</option>
+                <option value="North Wales<">North Wales</option>
+                <option value="North West England">North West England</option>
+                <option value="Northern Ireland">Northern Ireland</option>
+                <option value="Northern Scotland">Northern Scotland</option>
+                <option value="South East England">South East England</option>
+                <option value="South Wales">South Wales</option>
+                <option value="South West England">South West England</option>
+                <option value="Southern Scotland">Southern Scotland</option>
+                <option value="West Midlands">West Midlands</option>
+                <option value="Yorkshire And The Humber">Yorkshire And The Humber</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="employment_status">Employment Status</label>
+            <select data-ng-model="salary.employment_status" data-ng-change="filterUpdate()" class="form-control" id="employment_status">
+                <option value=""> - Select all -</option>
+                <option value="Long-term Unemployed">Long-term Unemployed (>12 months)</option>
+                <option value="Permanent">Permanent</option>
+                <option value="Recently Unemployed">Recently Unemployed (<12 months)</option>
+                <option value="Self-Employed, Independent Consultant or Freelance">Self-Employed, Independent Consultant
+                    or Freelance
+                </option>
+                <option value="Temporary Employee or Fixed Term Contract">Temporary Employee or Fixed Term Contract
+                </option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="highest_education">Highest Education</label>
+            <select data-ng-model="salary.highest_education" data-ng-change="filterUpdate()" class="form-control" id="highest_education">
+                <option value=""> - Select all -</option>
+                <option value="A Level or Equivalent">A Level or Equivalent</option>
+                <option value="Bachelors Degree">Bachelors Degree</option>
+                <option value="GCSE or Equivalent">GCSE or Equivalent</option>
+                <option value="HND / HNC or Equivalent">HND / HNC or Equivalent</option>
+                <option value="Masters Degree">Masters Degree</option>
+                <option value="Ph.D">Ph.D</option>
+                <option value="Vocational">Vocational</option>
+            </select>
+        </div>
     </div>
 
-    <salary-chart data="filtered"></salary-chart>
+    <div class="row">
+        <div class="col-md-12" style="margin-top:50px;">
+            <salary-barchart chart-data="dataColumns" class="img-responsive"></salary-barchart>
+        </div>
+    </div>
+
+
 
     <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
         No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
