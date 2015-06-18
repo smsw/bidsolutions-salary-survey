@@ -1,9 +1,16 @@
 <section data-ng-controller="SalariesFilterController" data-ng-init="initSalaryFunctions()">
     <div class="page-header">
-        <h1>Salaries</h1>
+        <h1>Salary Survey 2015</h1>
     </div>
 
     <div class="row">
+        <div class="col-md-2">
+            <label for="gender">Age Group</label>
+            <select data-ng-model="salary.age" data-ng-change="filterUpdate()" class="form-control" id="age">
+                <option value=""> - Select all -</option>
+                <option>Todo</option>
+            </select>
+        </div>
         <div class="col-md-2">
             <label for="gender">Gender</label>
             <select data-ng-model="salary.gender" data-ng-change="filterUpdate()" class="form-control" id="gender">
@@ -12,7 +19,7 @@
                 <option value="f">Female</option>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="location">Location</label>
             <select data-ng-model="salary.employment_location" data-ng-change="filterUpdate()" class="form-control" id="location">
                 <option value=""> - Select all -</option>
@@ -33,7 +40,7 @@
                 <option value="Yorkshire And The Humber">Yorkshire And The Humber</option>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="employment_status">Employment Status</label>
             <select data-ng-model="salary.employment_status" data-ng-change="filterUpdate()" class="form-control" id="employment_status">
                 <option value=""> - Select all -</option>
@@ -47,7 +54,7 @@
                 </option>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="highest_education">Highest Education</label>
             <select data-ng-model="salary.highest_education" data-ng-change="filterUpdate()" class="form-control" id="highest_education">
                 <option value=""> - Select all -</option>
@@ -60,15 +67,59 @@
                 <option value="Vocational">Vocational</option>
             </select>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12" style="margin-top:50px;">
-            <salary-barchart chart-data="dataColumns" class="img-responsive"></salary-barchart>
+        <div class="col-md-2">
+            <label class="control-label" for="primary_industry">Primary Industry</label>
+            <select id="primary_industry" data-ng-model="salary.primary_industry" data-ng-change="filterUpdate()" class="form-control" required>
+                <option value="">- Select all -</option>
+                <option value="Banking & Finance">Banking & Finance</option>
+                <option value="Construction">Construction</option>
+                <option value="Defence & Security">Defence & Security</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Health & Medical">Health & Medical</option>
+                <option value="IT">IT</option>
+                <option value="Manufacturing & Logisitics">Manufacturing & Logisitics</option>
+                <option value="Multiple">Multiple</option>
+                <option value="Outsourcing / BPO">Outsourcing / BPO</option>
+                <option value="Professional Services & Property">Professional Services & Property</option>
+                <option value="Public Sector">Public Sector</option>
+                <option value="Recruitment">Recruitment</option>
+                <option value="Telco & Utilities">Telco & Utilities</option>
+            </select>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <salary-barchart chart-data="dataColumns" class="img-responsive" style="margin-top:50px;margin-bottom:50px;"></salary-barchart>
+        </div>
+    </div>
 
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Minimum</th>
+                    <th>Average</th>
+                    <th>Median</th>
+                    <th>Maximum</th>
+                    <th>Average Age</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="job in dataByJobTitles">
+                    <td>{{ job.name }}</td>
+                    <td class="minimum success">{{ job.salary.minimum }}</td>
+                    <td class="average warning">{{ job.salary.average }}</td>
+                    <td class="median info">{{ job.salary.median }}</td>
+                    <td class="maximum danger">{{ job.salary.maximum }}</td>
+                    <td class="average-age default">{{ job.average_age }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
         No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?

@@ -33,9 +33,9 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                     {name: 'Proposal Writer'}
                 ];
 
-                var dataByJobTitles = [];
+                $scope.dataByJobTitles = [];
                 angular.forEach(jobTitlesArr, function (value, key) {
-                    dataByJobTitles.push(
+                    $scope.dataByJobTitles.push(
                         {
                             name: value.name,
                             salary: {
@@ -48,8 +48,8 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                         }
                     );
                 });
-                console.log('Populate our graph;', dataByJobTitles);
-                $scope.populateDataColumn(dataByJobTitles);
+                console.log('Populate our graph;', $scope.dataByJobTitles);
+                $scope.populateDataColumn($scope.dataByJobTitles);
             });
         };
 
@@ -85,7 +85,6 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
              data
              );
              */
-
 
             // Suited Format for HighCharts
             $scope.dataColumns = [
