@@ -1,9 +1,13 @@
 'use strict';
 
-angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Salaries', '$filter', '$q',
-    function ($scope, Salaries, $filter, $q) {
+angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Salaries', '$filter', 'Authentication', '$location',
+    function ($scope, Salaries, $filter, Authentication, $location) {
         // Salaries filter controller logic
         // ...
+
+        $scope.authentication = Authentication;
+
+        if (!$scope.authentication.user) $location.path('/#!/signin'); // If not logged in, deny access
 
         var Salary = Salaries.query();
 
