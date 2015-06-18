@@ -1,9 +1,13 @@
 'use strict';
 
-angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Salaries', '$filter', '$q',
-    function ($scope, Salaries, $filter, $q) {
+angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Salaries', '$filter', 'Authentication', '$location',
+    function ($scope, Salaries, $filter, Authentication, $location) {
         // Salaries filter controller logic
         // ...
+
+        $scope.authentication = Authentication;
+
+        if (!$scope.authentication.user) $location.path('/#!/signin'); // If not logged in, deny access
 
         var Salary = Salaries.query();
 
@@ -33,9 +37,9 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                     {name: 'Proposal Writer'}
                 ];
 
-                var dataByJobTitles = [];
+                $scope.dataByJobTitles = [];
                 angular.forEach(jobTitlesArr, function (value, key) {
-                    dataByJobTitles.push(
+                    $scope.dataByJobTitles.push(
                         {
                             name: value.name,
                             salary: {
@@ -48,8 +52,8 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
                         }
                     );
                 });
-                console.log('Populate our graph;', dataByJobTitles);
-                $scope.populateDataColumn(dataByJobTitles);
+                console.log('Populate our graph;', $scope.dataByJobTitles);
+                $scope.populateDataColumn($scope.dataByJobTitles);
             });
         };
 
@@ -85,7 +89,6 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
              data
              );
              */
-
 
             // Suited Format for HighCharts
             $scope.dataColumns = [
