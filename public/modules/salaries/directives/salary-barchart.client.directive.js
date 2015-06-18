@@ -30,36 +30,38 @@ angular.module('salaries').directive('salaryBarchart', [
                                 'Head of Proposal Management', 'Knowledgebase Manager', 'Proposal Manager', 'Proposal Writer']
                         }],
                         yAxis: [
-                            { // Primary yAxis
+                            { // Secondary yAxis
 
                                 title: {
                                     text: 'Age',
                                     style: {
-                                        color: Highcharts.getOptions().colors[0]
+                                        color: Highcharts.getOptions().colors[1]
                                     }
                                 },
                                 labels: {
                                     format: '{value}',
                                     style: {
-                                        color: Highcharts.getOptions().colors[0]
-                                    }
-                                }
-                            },
-                            { // Secondary yAxis
-                                labels: {
-                                    format: '£ {value}',
-                                    style: {
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
+                                opposite: true
+                            },
+                            { // Secondary yAxis
+
                                 title: {
                                     text: 'GBP',
                                     style: {
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
-                            opposite: true
-                            }],
+                                labels: {
+                                    format: '£ {value}',
+                                    style: {
+                                        color: Highcharts.getOptions().colors[1]
+                                    }
+                                }
+                            }
+                        ],
                         tooltip: {
                             shared: true
                         },
