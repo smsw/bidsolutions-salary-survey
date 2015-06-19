@@ -75,15 +75,19 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
 	Salary.find().sort('-created').select('-_id -created -name').exec(function(err, salaries) {
 
+    /*
+     * Need to check remote so not open to public download
 		var ip = req.headers['x-forwarded-for'] ||
 			req.connection.remoteAddress ||
 			req.socket.remoteAddress ||
 			req.connection.socket.remoteAddress;
+
 		if (ip !== '::1') {
 			return res.status(403).send({
 				message: 'Remote access not allowed'
 			});
 		}
+    */
 
 		if (err) {
 			return res.status(400).send({
