@@ -72,8 +72,19 @@ exports.delete = function(req, res) {
 /**
  * List of Salaries
  */
-exports.list = function(req, res) { 
-	Salary.find().sort('-created').populate('user', 'displayName').exec(function(err, salaries) {
+exports.list = function(req, res) {
+	Salary.find().sort('-created').select('-_id -created -name').exec(function(err, salaries) {
+
+		var ip = req.headers['x-forwarded-for'] ||
+			req.connection.remoteAddress ||
+			req.socket.remoteAddress ||
+			req.connection.socket.remoteAddress;
+		if (ip !== '::1') {
+			return res.status(403).send({
+				message: 'Remote access not allowed'
+			});
+		}
+
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
