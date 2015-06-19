@@ -3,11 +3,12 @@
         <h1>Salary Survey 2015</h1>
     </div>
 
+
     <div class="row">
         <div class="col-md-2">
             <label for="gender">Age Group</label>
-            <select data-ng-model="salary.age" data-ng-change="filterUpdate()" class="form-control" id="age">
-                <option value=""> - Select all -</option>
+            <select data-ng-model="salary.bs_job_title" data-ng-change="filterUpdate()" class="form-control" id="age">
+                <option value="Bid Manager"> - Select all -</option>
                 <option>Todo</option>
             </select>
         </div>
@@ -90,34 +91,58 @@
 
     <div class="row">
         <div class="col-md-12">
-            <salary-barchart chart-data="dataColumns" class="img-responsive" style="margin-top:50px;margin-bottom:50px;"></salary-barchart>
+            <salary-barchart chart-data="dataColumns" class="chart"></salary-barchart>
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Job Title</th>
-                    <th>Minimum</th>
-                    <th>Average</th>
-                    <th>Median</th>
-                    <th>Maximum</th>
-                    <th>Average Age</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="job in dataByJobTitles">
-                    <td>{{ job.name }}</td>
-                    <td class="minimum success">{{ job.salary.minimum }}</td>
-                    <td class="average warning">{{ job.salary.average }}</td>
-                    <td class="median info">{{ job.salary.median }}</td>
-                    <td class="maximum danger">{{ job.salary.maximum }}</td>
-                    <td class="average-age default">{{ job.average_age }}</td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default table-stats">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="job in dataByJobTitles">{{ job.name }}</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Minimum</td>
+                                <td ng-repeat="job in dataByJobTitles">
+                                    {{ job.salary.minimum | currency : '£' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">Average</td>
+                                <td ng-repeat="job in dataByJobTitles">
+                                    {{ job.salary.average | currency : '£' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">Median</td>
+                                <td ng-repeat="job in dataByJobTitles">
+                                    {{ job.salary.median | currency : '£' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">Maximum</td>
+                                <td ng-repeat="job in dataByJobTitles">
+                                    {{ job.salary.maximum | currency : '£' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100">Average Age</td>
+                                <td ng-repeat="job in dataByJobTitles">
+                                    {{ job.average_age }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

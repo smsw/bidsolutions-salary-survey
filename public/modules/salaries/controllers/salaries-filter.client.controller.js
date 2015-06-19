@@ -7,8 +7,6 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
 
         $scope.authentication = Authentication;
 
-        if (!$scope.authentication.user) $location.path('/#!/signin'); // If not logged in, deny access
-
         var Salary = Salaries.query();
 
         // Called on the view with ng-init
