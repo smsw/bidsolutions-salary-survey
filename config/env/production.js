@@ -5,7 +5,7 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-
+				'public/dist/application.min.css'
 			],
 			js: [
 				'public/lib/angular/angular.min.js',
@@ -16,7 +16,10 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
+        'public/lib/highcharts-release/adapters/standalone-framework.js',
+        'public/lib/highcharts-release/highcharts.js',
+        'public/lib/highcharts-ng/dist/highcharts-ng.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

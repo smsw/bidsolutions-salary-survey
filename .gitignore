@@ -7,5 +7,4 @@ public/lib
 app/tests/coverage/
 .bower-*/
 .idea/
-public/dist
 .sass-cache
