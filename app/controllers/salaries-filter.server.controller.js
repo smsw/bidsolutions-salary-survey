@@ -8,76 +8,41 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 
-var response =
-    [
-        {
-            name: 'Minimum Basic Salary',
-            type: 'column',
-            yAxis: 1,
-            // Goes in order of Categories
-            data: 0,
-            tooltip: {
-                valueSuffix: '(GBP)'
-            }
-        },
-        {
-            name: 'Average Basic Salary',
-            type: 'column',
-            yAxis: 1,
-            data: 0,
-            //data: $scope.pickData('salary', 'average', data),
-            tooltip: {
-                valueSuffix: '(GBP)'
-            }
-        },
-        {
-            name: 'Median Basic Salary',
-            type: 'column',
-            yAxis: 1,
-            data: 0,
-            tooltip: {
-                valueSuffix: '(GBP)'
-            }
-        },
-        {
-            name: 'Maximum Basic Salary',
-            type: 'column',
-            yAxis: 1,
-            data: 0,
-            tooltip: {
-                valueSuffix: '(GBP)'
-            }
-        },
-        {
-            name: 'Average Age',
-            type: 'spline',
-            data: 0,
-            tooltip: {
-                valueSuffix: ''
-            }
-        }
-    ];
-
-/**
- * List of Salaries filters
+/***
+ * Pick a property and return values
+ * @param prop
+ * @param type
+ * @param data
+ * @returns {*}
  */
+var pickData = function (prop, type, data) {
 
-exports.list = function (req, res) {
-    Salary.find(req.query)
-        .exec(function (err, salaries, next) {
-            if (err) {
-                return next(err);
-            } else {
-                // Populate our response
-                response[0].data = calculateMinMaxValue('salary', 'min', salaries);
-                response[1].data = calculateAverage('salary', salaries);
-                response[3].data = calculateMinMaxValue('salary', 'max', salaries);
-                response[2].data = calculateMedian('salary', salaries);
-                response[3].data = calculateMinMaxValue('salary', 'max', salaries);
-                response[4].data = calculateAverage('age', salaries);
-                res.jsonp(response);
-            }
-        });
+    return data.map(function (o) {
+        if (type !== '') {
+            return o[prop][type];
+        } else {
+            return parseInt(o[prop]) || 0;
+        }
+    });
+};
+
+
+/***
+ * Filter data by various params
+ * @param filter
+ * @param prop
+ * @param data
+ * @returns {Array}
+ */
+var filterData = function (filter, prop, data) {
+    var result = [];
+
+    _.forEach(data, function (value, key) {
+        if (value[prop] === filter) {
+            result.push(value);
+        }
+    });
+    return result;
 };
 
 
@@ -112,7 +77,7 @@ var calculateMinMaxValue = function (prop, minMax, data) {
     })
         .filter(function (val) {
             // Filter out null as that gives a value of 0
-            return val !== null
+            return val !== null;
         });
 
     return parseInt(Math[minMax].apply(Math, values)) || 0;
@@ -141,4 +106,107 @@ var calculateMedian = function (prop, data) {
         return parseInt(values[half]) || 0;
     else
         return parseInt((values[half - 1] + values[half]) / 2.0) || 0;
+};
+
+
+/***
+ * Populate our response to parse
+ * @param data
+ * @returns {*[]}
+ */
+
+var populateResponse = function (data) {
+    return [
+        {
+            name: 'Minimum Basic Salary',
+            type: 'column',
+            yAxis: 1,
+            // Goes in order of Categories
+            data: pickData('salary', 'minimum', data),
+            tooltip: {
+                valueSuffix: '(GBP)'
+            }
+        },
+        {
+            name: 'Average Basic Salary',
+            type: 'column',
+            yAxis: 1,
+            data: pickData('salary', 'average', data),
+            tooltip: {
+                valueSuffix: '(GBP)'
+            }
+        },
+        {
+            name: 'Median Basic Salary',
+            type: 'column',
+            yAxis: 1,
+            data: pickData('salary', 'median', data),
+            tooltip: {
+                valueSuffix: '(GBP)'
+            }
+        },
+        {
+            name: 'Maximum Basic Salary',
+            type: 'column',
+            yAxis: 1,
+            data: pickData('salary', 'maximum', data),
+            tooltip: {
+                valueSuffix: '(GBP)'
+            }
+        },
+        {
+            name: 'Average Age',
+            type: 'spline',
+            data: pickData('average_age', '', data),
+            tooltip: {
+                valueSuffix: ''
+            }
+        }
+    ];
+};
+
+
+/***
+ * List of Salaries filtered by Query
+ * @param req
+ * @param res
+ */
+exports.list = function (req, res) {
+    Salary.find(req.query)
+        .exec(function (err, salaries, next) {
+            if (err) {
+                return next(err);
+            } else {
+
+                // Store job titles to iterate over
+                // We could also iterate over the existing data and pull a unique list of job titles instead...
+                var jobTitlesArr = [
+                    {name: 'Bid Manager'},
+                    {name: 'Document Manager'},
+                    {name: 'Graphic Designer'},
+                    {name: 'Head of Bid Management'},
+                    {name: 'Head of Proposal Management'},
+                    {name: 'Knowledgebase Manager'},
+                    {name: 'Proposal Manager'},
+                    {name: 'Proposal Writer'}
+                ];
+
+                var dataByJobTitles = [];
+                _.forEach(jobTitlesArr, function (value, key) {
+                    dataByJobTitles.push(
+                        {
+                            name: value.name,
+                            salary: {
+                                average: calculateAverage('salary', filterData(value.name, 'bs_job_title', salaries)),
+                                median: calculateMedian('salary', filterData(value.name, 'bs_job_title', salaries)),
+                                maximum: calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', salaries)),
+                                minimum: calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', salaries))
+                            },
+                            average_age: calculateAverage('age', filterData(value.name, 'bs_job_title', salaries))
+                        }
+                    );
+                });
+                res.jsonp(populateResponse(dataByJobTitles));
+            }
+        });
 };

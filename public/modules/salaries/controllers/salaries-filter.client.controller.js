@@ -187,7 +187,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             })
                 .filter(function (val) {
                     // Filter out null as that gives a value of 0
-                    return val !== null
+                    return val !== null;
                 });
 
             return parseInt(Math[prop].apply(Math, values)) || 0;

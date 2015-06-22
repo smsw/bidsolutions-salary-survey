@@ -534,6 +534,18 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
 
 'use strict';
 
+angular.module('salaries').controller('SalariesFilteredController', ['$scope', 'SalariesFiltered',
+	function($scope, SalariesFiltered) {
+		// Salaries filtered controller logic
+		// ...
+
+		$scope.someData = SalariesFiltered.query({gender: 'm'});
+
+	}
+]);
+
+'use strict';
+
 // Salaries controller
 angular.module('salaries').controller('SalariesController', ['$scope', '$stateParams', '$location', '$filter', 'Authentication', 'Salaries',
     function ($scope, $stateParams, $location, $filter, Authentication, Salaries) {
@@ -778,6 +790,13 @@ angular.module('salaries')
                 }
             });
         }]
+        .factory('SalariesFiltered', ['$resource',
+            function($resource) {
+                return $resource('salaries/search', {
+                    query: {method: 'GET'}
+                })
+            }
+        ])
 );
 
 'use strict';
