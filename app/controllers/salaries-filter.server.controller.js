@@ -172,6 +172,7 @@ var populateResponse = function (data) {
  */
 exports.list = function (req, res, next) {
 
+    // @TODO: Refactor
     console.log(req.query);
 
     var age_splitter = function () {
