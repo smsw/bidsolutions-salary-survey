@@ -5,23 +5,31 @@ angular.module('salaries').controller('SalariesFilteredController', ['$scope', '
 		// Salaries filtered controller logic
 		// ...
 
-		var Salary = new SalariesFiltered.query();
-
-		$scope.initialiseChart = function (){
+		/***
+		 * Retrieve data from our service
+		 */
+		$scope.chartUpdate = function (){
+			var Salary = new SalariesFiltered.query($scope.salary);
 			Salary.$promise.then(function (data) {
 				$scope.chartData = data;
 			});
 		};
-
 
 		/***
 		 * Filter Update
 		 * Called when ng-change is detected
 		 */
 		$scope.filterUpdate = function () {
-			$scope.copiedChartData = angular.copy($scope.rawData);
-			//$scope.initSalaryFunctions($filter('filter')($scope.copiedChartData, $scope.salary));
-		};
 
+			// Catch empty filter values, and remove from query
+			angular.forEach($scope.salary, function(value, key){
+				if(value === ''){
+					delete $scope.salary[key];
+				}
+			});
+
+			// Update query
+			$scope.chartUpdate();
+		};
 	}
 ]);

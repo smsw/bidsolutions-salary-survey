@@ -1,7 +1,12 @@
-<section data-ng-controller="SalariesFilteredController" data-ng-init="initialiseChart()">
+<section data-ng-controller="SalariesFilteredController" data-ng-init="chartUpdate()">
     <div class="page-header">
         <h1>Salary Survey 2015</h1>
     </div>
+
+    <h3>Filters:</h3>
+    <pre>
+        {{ salary | json }}
+    </pre>
 
     <div class="row">
         <div class="col-md-2">
