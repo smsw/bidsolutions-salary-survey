@@ -4,16 +4,20 @@
     </div>
 
     <h3>Filters:</h3>
+
     <pre>
         {{ salary | json }}
     </pre>
-
     <div class="row">
         <div class="col-md-2">
             <label for="gender">Age Group</label>
-            <select data-ng-model="salary.bs_job_title" data-ng-change="filterUpdate()" class="form-control" id="age">
-                <option value="Bid Manager"> - Select all -</option>
-                <option>Todo</option>
+            <select data-ng-model="salary.age" data-ng-change="filterUpdate()" class="form-control" id="age">
+                <option value="0,100">- Select all -</option>
+                <option value="18,20">18 - 20 years</option>
+                <option value="21,30">21 - 30 years</option>
+                <option value="31,40">31 - 40 years</option>
+                <option value="41,50">41 - 50 years</option>
+                <option value="51,60">51 - 60 years</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -108,38 +112,40 @@
                             <thead>
                             <tr>
                                 <td></td>
-                                <td ng-repeat="job in dataByJobTitles">{{ job.name }}</td>
+                                <td ng-repeat="job in tableData">
+                                    {{job.name}}
+                                </td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>Minimum</td>
-                                <td ng-repeat="job in dataByJobTitles">
-                                    {{ job.salary.minimum | currency : '£' }}
+                                <td ng-repeat="job in tableData">
+                                    {{job.salary.minimum}}
                                 </td>
                             </tr>
                             <tr>
-                                <td width="100">Average</td>
-                                <td ng-repeat="job in dataByJobTitles">
-                                    {{ job.salary.average | currency : '£' }}
+                                <td>Average</td>
+                                <td ng-repeat="job in tableData">
+                                    {{job.salary.average}}
                                 </td>
                             </tr>
                             <tr>
-                                <td width="100">Median</td>
-                                <td ng-repeat="job in dataByJobTitles">
-                                    {{ job.salary.median | currency : '£' }}
+                                <td>Median</td>
+                                <td ng-repeat="job in tableData">
+                                    {{job.salary.median}}
                                 </td>
                             </tr>
                             <tr>
-                                <td width="100">Maximum</td>
-                                <td ng-repeat="job in dataByJobTitles">
-                                    {{ job.salary.maximum | currency : '£' }}
+                                <td>Maximum</td>
+                                <td ng-repeat="job in tableData">
+                                    {{job.salary.maximum}}
                                 </td>
                             </tr>
                             <tr>
-                                <td width="100">Average Age</td>
-                                <td ng-repeat="job in dataByJobTitles">
-                                    {{ job.average_age }}
+                                <td>Average Age</td>
+                                <td ng-repeat="job in tableData">
+                                    {{job.average_age}}
                                 </td>
                             </tr>
                             </tbody>

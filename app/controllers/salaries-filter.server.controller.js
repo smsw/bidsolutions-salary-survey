@@ -114,7 +114,6 @@ var calculateMedian = function (prop, data) {
  * @param data
  * @returns {*[]}
  */
-
 var populateResponse = function (data) {
     return [
         {
@@ -171,42 +170,73 @@ var populateResponse = function (data) {
  * @param req
  * @param res
  */
-exports.list = function (req, res) {
-    Salary.find(req.query)
-        .exec(function (err, salaries, next) {
-            if (err) {
-                return next(err);
-            } else {
+exports.list = function (req, res, next) {
 
-                // Store job titles to iterate over
-                // We could also iterate over the existing data and pull a unique list of job titles instead...
-                var jobTitlesArr = [
-                    {name: 'Bid Manager'},
-                    {name: 'Document Manager'},
-                    {name: 'Graphic Designer'},
-                    {name: 'Head of Bid Management'},
-                    {name: 'Head of Proposal Management'},
-                    {name: 'Knowledgebase Manager'},
-                    {name: 'Proposal Manager'},
-                    {name: 'Proposal Writer'}
-                ];
+    console.log(req.query);
 
-                var dataByJobTitles = [];
-                _.forEach(jobTitlesArr, function (value, key) {
-                    dataByJobTitles.push(
-                        {
-                            name: value.name,
-                            salary: {
-                                average: calculateAverage('salary', filterData(value.name, 'bs_job_title', salaries)),
-                                median: calculateMedian('salary', filterData(value.name, 'bs_job_title', salaries)),
-                                maximum: calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', salaries)),
-                                minimum: calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', salaries))
-                            },
-                            average_age: calculateAverage('age', filterData(value.name, 'bs_job_title', salaries))
-                        }
-                    );
-                });
-                res.jsonp(populateResponse(dataByJobTitles));
-            }
+    var age_splitter = function () {
+        var min_age, max_age,
+            salary = req.query || {};
+
+        salary.age = salary.age || "0,100";
+
+        min_age = salary.age.split(',')[0];
+        max_age = salary.age.split(',')[1];
+
+        return {
+            min: min_age,
+            max: max_age
+        }
+    };
+
+    console.log(age_splitter());
+
+    var query_copy = req.query;
+    query_copy.age = {$gte: age_splitter().min, $lte: age_splitter().max};
+
+    console.log(query_copy);
+
+
+    Salary.find(query_copy)
+        .exec(function (err, salaries) {
+            if (err) { return next(err); }
+
+            // Store job titles to iterate over
+            // We could also iterate over the existing data and pull a unique list of job titles instead...
+            var jobTitlesArr = [
+                {name: 'Bid Manager'},
+                {name: 'Document Manager'},
+                {name: 'Graphic Designer'},
+                {name: 'Head of Bid Management'},
+                {name: 'Head of Proposal Management'},
+                {name: 'Knowledgebase Manager'},
+                {name: 'Proposal Manager'},
+                {name: 'Proposal Writer'}
+            ];
+
+            var dataByJobTitles = [];
+            _.forEach(jobTitlesArr, function (value, key) {
+                dataByJobTitles.push(
+                    {
+                        name: value.name,
+                        salary: {
+                            average: calculateAverage('salary', filterData(value.name, 'bs_job_title', salaries)),
+                            median: calculateMedian('salary', filterData(value.name, 'bs_job_title', salaries)),
+                            maximum: calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', salaries)),
+                            minimum: calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', salaries))
+                        },
+                        average_age: calculateAverage('age', filterData(value.name, 'bs_job_title', salaries))
+                    }
+                );
+            });
+
+            res.jsonp(
+                [
+                    {
+                        chart: populateResponse(dataByJobTitles),
+                        table: dataByJobTitles
+                    }
+                ]);
+
         });
 };
