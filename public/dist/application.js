@@ -543,9 +543,6 @@ angular.module('salaries').controller('SalariesFilteredController', ['$scope', '
          * Retrieve data from our service
          */
         $scope.chartUpdate = function () {
-
-            console.log($scope.salary);
-
             var Salary = new SalariesFiltered.query($scope.salary);
 
             Salary.$promise.then(function (data) {
@@ -663,6 +660,8 @@ angular.module('salaries').controller('SalariesController', ['$scope', '$statePa
 ]);
 
 'use strict';
+// Code here will be linted with JSHint.
+/* jshint ignore:start */
 
 angular.module('salaries').directive('salaryBarchart', [
     function () {
@@ -672,16 +671,14 @@ angular.module('salaries').directive('salaryBarchart', [
             scope: {
                 chartData: '='
             },
-            controller: ["scope", "element", "attrs", function (scope, element, attrs) {
+            link: function (scope, element, attrs) {
 
                 scope.$watch('chartData', function () {
                     drawPlot();
                 });
 
                 var drawPlot = function () {
-                    // jshint ignore: start
-                    new Highcharts.Chart({
-
+                    var chart = new Highcharts.Chart({
                         chart: {
                             renderTo: element[0]
                         },
@@ -742,11 +739,11 @@ angular.module('salaries').directive('salaryBarchart', [
                         series: scope.chartData
                     });
                 };
-                // jshint ignore: end
-            }]
+            }
         };
     }
 ]);
+/* jshint ignore:end */
 
 'use strict';
 
