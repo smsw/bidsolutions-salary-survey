@@ -491,7 +491,7 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
             })
                 .filter(function (val) {
                     // Filter out null as that gives a value of 0
-                    return val !== null
+                    return val !== null;
                 });
 
             return parseInt(Math[prop].apply(Math, values)) || 0;
@@ -534,14 +534,43 @@ angular.module('salaries').controller('SalariesFilterController', ['$scope', 'Sa
 
 'use strict';
 
-angular.module('salaries').controller('SalariesFilteredController', ['$scope', 'SalariesFiltered',
-	function($scope, SalariesFiltered) {
-		// Salaries filtered controller logic
-		// ...
+angular.module('salaries').controller('SalariesFilteredController', ['$scope', 'SalariesFiltered', '$filter', 'Authentication', '$location',
+    function ($scope, SalariesFiltered, $filter, Authentication, $location) {
+        // Salaries filtered controller logic
+        // ...
 
-		$scope.someData = SalariesFiltered.query({gender: 'm'});
+        /***
+         * Retrieve data from our service
+         */
+        $scope.chartUpdate = function () {
 
-	}
+            console.log($scope.salary);
+
+            var Salary = new SalariesFiltered.query($scope.salary);
+
+            Salary.$promise.then(function (data) {
+                $scope.chartData = data[0].chart;
+                $scope.tableData = data[0].table;
+            });
+        };
+
+        /***
+         * Filter Update
+         * Called when ng-change is detected
+         */
+        $scope.filterUpdate = function () {
+
+            // Catch empty filter values, and remove from query
+            angular.forEach($scope.salary, function (value, key) {
+                if (value === '') {
+                    delete $scope.salary[key];
+                }
+            });
+
+            // Update query
+            $scope.chartUpdate();
+        };
+    }
 ]);
 
 'use strict';
@@ -719,62 +748,17 @@ angular.module('salaries').directive('salaryBarchart', [
 
 'use strict';
 
-
+//Salaries service used to communicate SalariesFiltered REST endpoint
 angular.module('salaries')
-    .directive('salaryChart', function () {
-      return {
-        restrict: 'E',
-        scope: {
-          data: '='
-        },
 
-        link: function (scope, element, attrs) {
-          var chart = new Highcharts.Chart({
-            chart: {
-              renderTo: element[0]
-            },
-            title: {
-              text: ''
-            },
-            series: [{
-              type: 'pie',
-              name: 'Respondents',
-              data: scope.data
-            }]
-          });
-          scope.$watch('data', function (newValue) {
-            chart.series[0].setData(newValue, true);
-          }, true);
-        },
+    .factory('SalariesFiltered', ['$resource',
+        function ($resource) {
+            return $resource('salaries/search');
+        }]
+);
 
-        template: '<div>Error</div>'
-      }
-    });
 
-'use strict';
 
-angular.module('salaries')
-    .filter('calcAvg',
-        function () {
-            return function (input) {
-                // Calculate Average Salary
-                var salaries = [], totalSalary = 0;
-
-                angular.forEach(input, function (value) {
-                    this.push(value.salary);
-                    totalSalary += value.salary;
-                }, salaries);
-
-                return totalSalary / salaries.length;
-            };
-        }
-    )
-    .filter('testFilter', function (){
-
-       return function(input) {
-       }
-
-    });
 'use strict';
 
 //Salaries service used to communicate Salaries REST endpoints
@@ -790,13 +774,6 @@ angular.module('salaries')
                 }
             });
         }]
-        .factory('SalariesFiltered', ['$resource',
-            function($resource) {
-                return $resource('salaries/search', {
-                    query: {method: 'GET'}
-                })
-            }
-        ])
 );
 
 'use strict';
