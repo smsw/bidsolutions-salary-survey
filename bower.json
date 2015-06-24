@@ -13,8 +13,9 @@
     "angular-sanitize": "~1.2",
     "angular-bootstrap": "~0.11.2",
     "angular-ui-utils": "~0.1.1",
-    "angular-ui-router": "~0.2.11",
-    "highcharts-release": "~4.1.5",
-    "highcharts-ng": "~0.0.8"
+    "angular-ui-router": "~0.2.11"
+  },
+  "devDependencies": {
+    "highcharts": "~4.1.6"
   }
 }

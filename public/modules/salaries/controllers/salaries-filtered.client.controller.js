@@ -9,9 +9,6 @@ angular.module('salaries').controller('SalariesFilteredController', ['$scope', '
          * Retrieve data from our service
          */
         $scope.chartUpdate = function () {
-
-            console.log($scope.salary);
-
             var Salary = new SalariesFiltered.query($scope.salary);
 
             Salary.$promise.then(function (data) {

@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'salarysurvey';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'highcharts-ng'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -672,14 +672,16 @@ angular.module('salaries').directive('salaryBarchart', [
             scope: {
                 chartData: '='
             },
-            link: function (scope, element, attrs) {
+            controller: ["scope", "element", "attrs", function (scope, element, attrs) {
 
                 scope.$watch('chartData', function () {
                     drawPlot();
                 });
 
-                var drawPlot = function() {
-                    var chart = new Highcharts.Chart({
+                var drawPlot = function () {
+                    // jshint ignore: start
+                    new Highcharts.Chart({
+
                         chart: {
                             renderTo: element[0]
                         },
@@ -695,7 +697,6 @@ angular.module('salaries').directive('salaryBarchart', [
                         }],
                         yAxis: [
                             { // Secondary yAxis
-
                                 title: {
                                     text: 'Age',
                                     style: {
@@ -741,7 +742,8 @@ angular.module('salaries').directive('salaryBarchart', [
                         series: scope.chartData
                     });
                 };
-            }
+                // jshint ignore: end
+            }]
         };
     }
 ]);

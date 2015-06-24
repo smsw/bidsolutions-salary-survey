@@ -8,6 +8,15 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 
+// Store job titles to iterate over
+// We could also iterate over the existing data and pull a unique list of job titles instead...
+var jobTitlesArr = [
+    {name: 'Bid Manager'}, {name: 'Document Manager'}, {name: 'Graphic Designer'},
+    {name: 'Head of Bid Management'}, {name: 'Head of Proposal Management'},
+    {name: 'Knowledgebase Manager'}, {name: 'Proposal Manager'}, {name: 'Proposal Writer'}
+];
+
+
 /***
  * Pick a property and return values
  * @param prop
@@ -166,54 +175,40 @@ var populateResponse = function (data) {
 
 
 /***
+ * Split Age Values into seperate values
+ * @returns {{min: *, max: *}}
+ */
+var age_splitter = function (req) {
+    var min_age, max_age,
+        salary = req.query || {};
+
+    salary.age = salary.age || '0,100';
+
+    min_age = salary.age.split(',')[0];
+    max_age = salary.age.split(',')[1];
+
+    return {
+        min: min_age,
+        max: max_age
+    };
+};
+
+
+/***
  * List of Salaries filtered by Query
  * @param req
  * @param res
  */
 exports.list = function (req, res, next) {
 
-    // @TODO: Refactor
-    console.log(req.query);
-
-    var age_splitter = function () {
-        var min_age, max_age,
-            salary = req.query || {};
-
-        salary.age = salary.age || "0,100";
-
-        min_age = salary.age.split(',')[0];
-        max_age = salary.age.split(',')[1];
-
-        return {
-            min: min_age,
-            max: max_age
-        }
-    };
-
-    console.log(age_splitter());
-
     var query_copy = req.query;
-    query_copy.age = {$gte: age_splitter().min, $lte: age_splitter().max};
-
-    console.log(query_copy);
-
+    query_copy.age = {$gte: age_splitter(req).min, $lte: age_splitter(req).max};
 
     Salary.find(query_copy)
         .exec(function (err, salaries) {
-            if (err) { return next(err); }
-
-            // Store job titles to iterate over
-            // We could also iterate over the existing data and pull a unique list of job titles instead...
-            var jobTitlesArr = [
-                {name: 'Bid Manager'},
-                {name: 'Document Manager'},
-                {name: 'Graphic Designer'},
-                {name: 'Head of Bid Management'},
-                {name: 'Head of Proposal Management'},
-                {name: 'Knowledgebase Manager'},
-                {name: 'Proposal Manager'},
-                {name: 'Proposal Writer'}
-            ];
+            if (err) {
+                return next(err);
+            }
 
             var dataByJobTitles = [];
             _.forEach(jobTitlesArr, function (value, key) {
@@ -238,6 +233,5 @@ exports.list = function (req, res, next) {
                         table: dataByJobTitles
                     }
                 ]);
-
         });
 };

@@ -1,4 +1,6 @@
 'use strict';
+// Code here will be linted with JSHint.
+/* jshint ignore:start */
 
 angular.module('salaries').directive('salaryBarchart', [
     function () {
@@ -14,7 +16,7 @@ angular.module('salaries').directive('salaryBarchart', [
                     drawPlot();
                 });
 
-                var drawPlot = function() {
+                var drawPlot = function () {
                     var chart = new Highcharts.Chart({
                         chart: {
                             renderTo: element[0]
@@ -31,7 +33,6 @@ angular.module('salaries').directive('salaryBarchart', [
                         }],
                         yAxis: [
                             { // Secondary yAxis
-
                                 title: {
                                     text: 'Age',
                                     style: {
@@ -81,3 +82,4 @@ angular.module('salaries').directive('salaryBarchart', [
         };
     }
 ]);
+/* jshint ignore:end */
