@@ -17,7 +17,7 @@ angular.module('salaries').directive('salaryBarchart', [
                 });
 
                 var drawPlot = function () {
-                    var chart = new Highcharts.Chart({
+                    scope.chart = new Highcharts.Chart({
                         chart: {
                             renderTo: element[0]
                         },
@@ -66,15 +66,7 @@ angular.module('salaries').directive('salaryBarchart', [
                         tooltip: {
                             shared: true
                         },
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            x: 0,
-                            y: 20,
-                            verticalAlign: 'top',
-                            floating: true,
-                            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-                        },
+
                         series: scope.chartData
                     });
                 };

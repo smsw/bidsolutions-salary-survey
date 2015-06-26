@@ -7,7 +7,7 @@ module.exports = function (app) {
 
     // Salaries Routes
     //app.route('/salaries')
-    //    .get(salaries.list)
+        //.get(salaries.list);
     //    .post(users.requiresLogin, salaries.create);
 
     app.route('/salaries/search')

@@ -1,160 +1,167 @@
 <section data-ng-controller="SalariesFilteredController" data-ng-init="chartUpdate()">
     <div class="page-header">
-        <h1>Salary Survey 2015</h1>
-    </div>
-
-    <p class="lead">Please note, design, responsive build and min respondents response of at least 5, are all work in progress</p>
-    <br>
-
-    <div class="row">
-        <div class="col-md-2">
-            <label for="age">Age Group</label>
-            <select data-ng-model="salary.age" data-ng-change="filterUpdate()" class="form-control" id="age">
-                <option value="">- Select all -</option>
-                <option value="18,20">18 - 20 years</option>
-                <option value="21,30">21 - 30 years</option>
-                <option value="31,40">31 - 40 years</option>
-                <option value="41,50">41 - 50 years</option>
-                <option value="51,60">51 - 60 years</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="gender">Gender</label>
-            <select data-ng-model="salary.gender" data-ng-change="filterUpdate()" class="form-control" id="gender">
-                <option value=""> - Select all -</option>
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="location">Location</label>
-            <select data-ng-model="salary.employment_location" data-ng-change="filterUpdate()" class="form-control" id="location">
-                <option value=""> - Select all -</option>
-                <option value="East Midlands">East Midlands</option>
-                <option value="East Of England">East Of England</option>
-                <option value="Field Based - No Primary Location">Field Based - No Primary Location</option>
-                <option value="Greater London">Greater London</option>
-                <option value="North East England">North East England</option>
-                <option value="North Wales">North Wales</option>
-                <option value="North West England">North West England</option>
-                <option value="Northern Ireland">Northern Ireland</option>
-                <option value="Northern Scotland">Northern Scotland</option>
-                <option value="South East England">South East England</option>
-                <option value="South Wales">South Wales</option>
-                <option value="South West England">South West England</option>
-                <option value="Southern Scotland">Southern Scotland</option>
-                <option value="West Midlands">West Midlands</option>
-                <option value="Yorkshire And The Humber">Yorkshire And The Humber</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="employment_status">Employment Status</label>
-            <select data-ng-model="salary.employment_status" data-ng-change="filterUpdate()" class="form-control" id="employment_status">
-                <option value=""> - Select all -</option>
-                <option value="Long-term Unemployed">Long-term Unemployed (>12 months)</option>
-                <option value="Permanent">Permanent</option>
-                <option value="Recently Unemployed">Recently Unemployed (<12 months)</option>
-                <option value="Self-Employed, Independent Consultant or Freelance">Self-Employed, Independent Consultant
-                    or Freelance
-                </option>
-                <option value="Temporary Employee or Fixed Term Contract">Temporary Employee or Fixed Term Contract
-                </option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="highest_education">Highest Education</label>
-            <select data-ng-model="salary.highest_education" data-ng-change="filterUpdate()" class="form-control" id="highest_education">
-                <option value=""> - Select all -</option>
-                <option value="A Level or Equivalent">A Level or Equivalent</option>
-                <option value="Bachelors Degree">Bachelors Degree</option>
-                <option value="GCSE or Equivalent">GCSE or Equivalent</option>
-                <option value="HND / HNC or Equivalent">HND / HNC or Equivalent</option>
-                <option value="Masters Degree">Masters Degree</option>
-                <option value="Ph.D">Ph.D</option>
-                <option value="Vocational">Vocational</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label class="control-label" for="primary_industry">Primary Industry</label>
-            <select id="primary_industry" data-ng-model="salary.primary_industry" data-ng-change="filterUpdate()" class="form-control" required>
-                <option value="">- Select all -</option>
-                <option value="Banking & Finance">Banking & Finance</option>
-                <option value="Construction">Construction</option>
-                <option value="Defence & Security">Defence & Security</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Health & Medical">Health & Medical</option>
-                <option value="IT">IT</option>
-                <option value="Manufacturing & Logisitics">Manufacturing & Logisitics</option>
-                <option value="Multiple">Multiple</option>
-                <option value="Outsourcing / BPO">Outsourcing / BPO</option>
-                <option value="Professional Services & Property">Professional Services & Property</option>
-                <option value="Public Sector">Public Sector</option>
-                <option value="Recruitment">Recruitment</option>
-                <option value="Telco & Utilities">Telco & Utilities</option>
-            </select>
-        </div>
+        <h2>Salary Survey 2015</h2>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <salary-barchart chart-data="chartData" class="chart"></salary-barchart>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="age">Age Group</label>
+                <select data-ng-model="salary.age" data-ng-change="filterUpdate()" class="form-control" id="age">
+                    <option value="">- Select all -</option>
+                    <option value="18,20">18 - 20 years</option>
+                    <option value="21,30">21 - 30 years</option>
+                    <option value="31,40">31 - 40 years</option>
+                    <option value="41,50">41 - 50 years</option>
+                    <option value="51,60">51 - 60 years</option>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default table-stats">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <td></td>
-                                <td ng-repeat="job in tableData">
-                                    {{job.name}}
-                                </td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Minimum</td>
-                                <td ng-repeat="job in tableData">
-                                    {{job.salary.minimum}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Average</td>
-                                <td ng-repeat="job in tableData">
-                                    {{job.salary.average}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Median</td>
-                                <td ng-repeat="job in tableData">
-                                    {{job.salary.median}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Maximum</td>
-                                <td ng-repeat="job in tableData">
-                                    {{job.salary.maximum}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Average Age</td>
-                                <td ng-repeat="job in tableData">
-                                    {{job.average_age}}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select ng-model="salary.gender" ng-change="filterUpdate()" class="form-control" id="gender">
+                    <option value="">- Select all -</option>
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="location">Location</label>
+                <select data-ng-model="salary.employment_location" data-ng-change="filterUpdate()" class="form-control"
+                        id="location">
+                    <option value=""> - Select all -</option>
+                    <option value="East Midlands">East Midlands</option>
+                    <option value="East Of England">East Of England</option>
+                    <option value="Field Based - No Primary Location">Field Based - No Primary Location</option>
+                    <option value="Greater London">Greater London</option>
+                    <option value="North East England">North East England</option>
+                    <option value="North Wales">North Wales</option>
+                    <option value="North West England">North West England</option>
+                    <option value="Northern Ireland">Northern Ireland</option>
+                    <option value="Northern Scotland">Northern Scotland</option>
+                    <option value="South East England">South East England</option>
+                    <option value="South Wales">South Wales</option>
+                    <option value="South West England">South West England</option>
+                    <option value="Southern Scotland">Southern Scotland</option>
+                    <option value="West Midlands">West Midlands</option>
+                    <option value="Yorkshire And The Humber">Yorkshire And The Humber</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="employment_status">Employment Status</label>
+                <select data-ng-model="salary.employment_status" data-ng-change="filterUpdate()" class="form-control"
+                        id="employment_status">
+                    <option value=""> - Select all -</option>
+                    <option value="Long-term Unemployed">Long-term Unemployed (>12 months)</option>
+                    <option value="Permanent">Permanent</option>
+                    <option value="Recently Unemployed">Recently Unemployed (<12 months)</option>
+                    <option value="Self-Employed, Independent Consultant or Freelance">Self-Employed, Independent
+                        Consultant or Freelance
+                    </option>
+                    <option value="Temporary Employee or Fixed Term Contract">Temporary Employee or Fixed Term
+                        Contract
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="highest_education">Highest Education</label>
+                <select data-ng-model="salary.highest_education" data-ng-change="filterUpdate()" class="form-control"
+                        id="highest_education">
+                    <option value=""> - Select all -</option>
+                    <option value="A Level or Equivalent">A Level or Equivalent</option>
+                    <option value="Bachelors Degree">Bachelors Degree</option>
+                    <option value="GCSE or Equivalent">GCSE or Equivalent</option>
+                    <option value="HND / HNC or Equivalent">HND / HNC or Equivalent</option>
+                    <option value="Masters Degree">Masters Degree</option>
+                    <option value="Ph.D">Ph.D</option>
+                    <option value="Vocational">Vocational</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label" for="primary_industry">Primary Industry</label>
+                <select id="primary_industry" data-ng-model="salary.primary_industry" data-ng-change="filterUpdate()"
+                        class="form-control" required>
+                    <option value="">- Select all -</option>
+                    <option value="Banking & Finance">Banking & Finance</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Defence & Security">Defence & Security</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Health & Medical">Health & Medical</option>
+                    <option value="IT">IT</option>
+                    <option value="Manufacturing & Logisitics">Manufacturing & Logisitics</option>
+                    <option value="Multiple">Multiple</option>
+                    <option value="Outsourcing / BPO">Outsourcing / BPO</option>
+                    <option value="Professional Services & Property">Professional Services & Property</option>
+                    <option value="Public Sector">Public Sector</option>
+                    <option value="Recruitment">Recruitment</option>
+                    <option value="Telco & Utilities">Telco & Utilities</option>
+                </select>
             </div>
         </div>
     </div>
 
-    <div class="alert alert-warning text-center" data-ng-hide="!salaries.$resolved || salaries.length">
-        No Salaries yet, why don't you <a href="/#!/salaries/create">create one</a>?
+    <salary-barchart chart-data="chartData" class="chart" style="height:500px"></salary-barchart>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td></td>
+                        <td ng-repeat="job in tableData">
+                            {{job.name}}
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Minimum</td>
+                        <td ng-repeat="job in tableData">
+                            {{job.salary.minimum}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Average</td>
+                        <td ng-repeat="job in tableData">
+                            {{job.salary.average}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Median</td>
+                        <td ng-repeat="job in tableData">
+                            {{job.salary.median}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Maximum</td>
+                        <td ng-repeat="job in tableData">
+                            {{job.salary.maximum}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Average Age</td>
+                        <td ng-repeat="job in tableData">
+                            {{job.average_age}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </section>

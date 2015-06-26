@@ -8,14 +8,6 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 
-// Store job titles to iterate over
-// We could also iterate over the existing data and pull a unique list of job titles instead...
-var jobTitlesArr = [
-    {name: 'Bid Manager'}, {name: 'Document Manager'}, {name: 'Graphic Designer'},
-    {name: 'Head of Bid Management'}, {name: 'Head of Proposal Management'},
-    {name: 'Knowledgebase Manager'}, {name: 'Proposal Manager'}, {name: 'Proposal Writer'}
-];
-
 
 /***
  * Pick a property and return values
@@ -34,6 +26,7 @@ var pickData = function (prop, type, data) {
         }
     });
 };
+
 
 
 /***
@@ -55,6 +48,7 @@ var filterData = function (filter, prop, data) {
 };
 
 
+
 /***
  * Calculate Average
  * @param prop
@@ -71,6 +65,7 @@ var calculateAverage = function (prop, data) {
 
     return parseInt(Math.floor(totalValue / data.length)) || 0;
 };
+
 
 
 /***
@@ -91,6 +86,7 @@ var calculateMinMaxValue = function (prop, minMax, data) {
 
     return parseInt(Math[minMax].apply(Math, values)) || 0;
 };
+
 
 
 /***
@@ -118,19 +114,56 @@ var calculateMedian = function (prop, data) {
 };
 
 
+
+/***
+ * Create object based on Job Title
+ * @param data
+ * @returns {Array}
+ */
+var createByJobTitle = function (data) {
+
+    var jobTitlesArr = [
+        {name: 'Bid Manager'}, {name: 'Document Manager'}, {name: 'Graphic Designer'},
+        {name: 'Head of Bid Management'}, {name: 'Head of Proposal Management'},
+        {name: 'Knowledgebase Manager'}, {name: 'Proposal Manager'}, {name: 'Proposal Writer'}
+    ];
+
+    var dataByJobTitles = [];
+
+    _.forEach(jobTitlesArr, function (value, key) {
+        dataByJobTitles.push(
+            {
+                name: value.name,
+                salary: {
+                    average: calculateAverage('salary', filterData(value.name, 'bs_job_title', data)),
+                    median: calculateMedian('salary', filterData(value.name, 'bs_job_title', data)),
+                    maximum: calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', data)),
+                    minimum: calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', data))
+                },
+                average_age: calculateAverage('age', filterData(value.name, 'bs_job_title', data))
+            }
+        );
+    });
+    return dataByJobTitles;
+};
+
+
+
 /***
  * Populate our response to parse
  * @param data
  * @returns {*[]}
  */
 var populateResponse = function (data) {
+
+    var jobTitles = createByJobTitle(data);
     return [
         {
             name: 'Minimum Basic Salary',
             type: 'column',
             yAxis: 1,
             // Goes in order of Categories
-            data: pickData('salary', 'minimum', data),
+            data: pickData('salary', 'minimum', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
@@ -139,7 +172,7 @@ var populateResponse = function (data) {
             name: 'Average Basic Salary',
             type: 'column',
             yAxis: 1,
-            data: pickData('salary', 'average', data),
+            data: pickData('salary', 'average', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
@@ -148,7 +181,7 @@ var populateResponse = function (data) {
             name: 'Median Basic Salary',
             type: 'column',
             yAxis: 1,
-            data: pickData('salary', 'median', data),
+            data: pickData('salary', 'median', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
@@ -157,7 +190,7 @@ var populateResponse = function (data) {
             name: 'Maximum Basic Salary',
             type: 'column',
             yAxis: 1,
-            data: pickData('salary', 'maximum', data),
+            data: pickData('salary', 'maximum', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
@@ -165,13 +198,14 @@ var populateResponse = function (data) {
         {
             name: 'Average Age',
             type: 'spline',
-            data: pickData('average_age', '', data),
+            data: pickData('average_age', '', jobTitles),
             tooltip: {
                 valueSuffix: ''
             }
         }
     ];
 };
+
 
 
 /***
@@ -194,6 +228,7 @@ var age_splitter = function (req) {
 };
 
 
+
 /***
  * List of Salaries filtered by Query
  * @param req
@@ -201,37 +236,19 @@ var age_splitter = function (req) {
  */
 exports.list = function (req, res, next) {
 
-    var query_copy = req.query;
-    query_copy.age = {$gte: age_splitter(req).min, $lte: age_splitter(req).max};
+    console.log(req.query);
 
-    Salary.find(query_copy)
+    var newQuery = req.query;
+    newQuery.age = {$gte: age_splitter(req).min, $lte: age_splitter(req).max};
+
+    Salary.find(newQuery)
         .exec(function (err, salaries) {
             if (err) {
                 return next(err);
             }
-
-            var dataByJobTitles = [];
-            _.forEach(jobTitlesArr, function (value, key) {
-                dataByJobTitles.push(
-                    {
-                        name: value.name,
-                        salary: {
-                            average: calculateAverage('salary', filterData(value.name, 'bs_job_title', salaries)),
-                            median: calculateMedian('salary', filterData(value.name, 'bs_job_title', salaries)),
-                            maximum: calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', salaries)),
-                            minimum: calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', salaries))
-                        },
-                        average_age: calculateAverage('age', filterData(value.name, 'bs_job_title', salaries))
-                    }
-                );
-            });
-
-            res.jsonp(
-                [
-                    {
-                        chart: populateResponse(dataByJobTitles),
-                        table: dataByJobTitles
-                    }
-                ]);
+            res.jsonp([{
+                chart: populateResponse(salaries),
+                table: createByJobTitle(salaries)
+            }]);
         });
 };
