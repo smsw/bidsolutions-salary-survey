@@ -1,7 +1,4 @@
 <section data-ng-controller="SalariesFilteredController" data-ng-init="chartUpdate()">
-    <div class="page-header">
-        <h2>Salary Survey 2015</h2>
-    </div>
 
     <div class="row">
         <div class="col-md-2">
@@ -118,12 +115,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="table-responsive">
+            <div class="table-responsive table-stats">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td></td>
-                        <td ng-repeat="job in tableData">
+                        <td ng-repeat="job in tableData" width="12.5%">
                             {{job.name}}
                         </td>
                     </tr>
