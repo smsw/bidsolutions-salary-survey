@@ -1,67 +1,87 @@
 <div class="container" data-ng-controller="HeaderController">
-	<div class="navbar-header">
-		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a href="/#!/" class="navbar-brand"><img src="dist/images/logo-main.png" class="img-responsive"></a>
-	</div>
-	<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
-		<ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
-			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
-				<a ng-switch-when="dropdown" class="dropdown-toggle">
-					<span data-ng-bind="item.title"></span>
-					<b class="caret"></b>
-				</a>
-				<ul ng-switch-when="dropdown" class="dropdown-menu">
-					<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-						<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
-					</li>
-				</ul>
-				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
-			</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-			<li>
-				<a href="http://bidsolutions.co.uk">Back to Bid Solutions.co.uk</a>
-			</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="/#!/settings/profile">Edit Profile</a>
-					</li>
-					<li>
-						<a href="/#!/settings/accounts">Manage Social Accounts</a>
-					</li>
-					<li data-ng-show="authentication.user.provider === 'local'">
-						<a href="/#!/settings/password">Change Password</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="/auth/signout">Signout</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</nav>
+    <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="/#!/" class="navbar-brand"><img src="dist/images/logo-main.png" class="img-responsive"></a>
+    </div>
+    <nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
+        <ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
+            <li data-ng-repeat="item in menu.items | orderBy: 'position'"
+                data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType"
+                ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}"
+                dropdown="item.menuItemType === 'dropdown'">
+                <a ng-switch-when="dropdown" class="dropdown-toggle">
+                    <span data-ng-bind="item.title"></span>
+                    <b class="caret"></b>
+                </a>
+                <ul ng-switch-when="dropdown" class="dropdown-menu">
+                    <li data-ng-repeat="subitem in item.items | orderBy: 'position'"
+                        data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}"
+                        ng-class="{active: $uiRoute}">
+                        <a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
+                    </li>
+                </ul>
+                <a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
+            <li>
+                <a href="http://bidsolutions.co.uk">Back to Bid Solutions.co.uk</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/#!/settings/profile">Edit Profile</a>
+                    </li>
+                    <li>
+                        <a href="/#!/settings/accounts">Manage Social Accounts</a>
+                    </li>
+                    <li data-ng-show="authentication.user.provider === 'local'">
+                        <a href="/#!/settings/password">Change Password</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="/auth/signout">Signout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 </div>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-<section class="page-entry-header image">
-	<div class="container">
-		<div class="overlay"></div>
-		<div class="row">
-			<div class="col-md-12">
-				<header class="entry-header">
-					<h1 class="entry-title">Salary Survey 2015</h1></header>
-			</div>
-		</div>
-		<!-- .entry-header -->
-	</div>
-</section>
+<div class="jumbotron image" style="padding-bottom: 30px;">
+    <div class="overlay hidden-xs hidden-sm"></div>
+    <div class="container">
+
+        <h1 class="text-center">Salary Survey 2015</h1>
+
+        <p class="text-center">The leading recruiter of bid and proposal professionals.</p>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    ea
+                    commodo consequat. </p>
+
+                <ul class="list-inline text-center">
+                    <button class="btn btn-primary text-uppercase">Download PDF Survey 2015</button>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center" style="margin-top: 20px;opacity:0.9;">
+            <i class="fa fa-chevron-down fa-fw fa-lg"></i>
+        </div>
+    </div>
+</div>
