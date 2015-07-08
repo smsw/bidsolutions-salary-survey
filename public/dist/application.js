@@ -65,11 +65,11 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		$urlRouterProvider.otherwise('/');
 
 		// Home state routing
-		$stateProvider.
-		state('home', {
-			url: '/',
-			templateUrl: 'modules/core/views/home.client.view.html'
-		});
+		//$stateProvider.
+		////state('home', {
+		////	url: '/',
+		////	templateUrl: 'modules/core/views/home.client.view.html'
+		////});
 	}
 ]);
 
@@ -281,14 +281,18 @@ angular.module('salaries').run(['Menus',
 
 //Setting up route
 angular.module('salaries').config(['$stateProvider',
-	function($stateProvider) {
-		// Salaries state routing
-		$stateProvider.
-		state('listSalaries', {
-			url: '/salaries',
-			templateUrl: 'modules/salaries/views/list-salaries.client.view.html'
-		});
-	}
+    function ($stateProvider) {
+        // Salaries state routing
+        $stateProvider.
+            state('listSalaries', {
+                url: '/salaries',
+                templateUrl: 'modules/salaries/views/list-salaries.client.view.html'
+            })
+            .state('test', {
+                url: '/',
+                templateUrl: 'modules/salaries/views/list-salaries.client.view.html'
+            });
+    }
 ]);
 
 'use strict';
