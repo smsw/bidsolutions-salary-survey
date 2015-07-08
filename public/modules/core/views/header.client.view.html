@@ -29,8 +29,18 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
+            <li class="dropdown open">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Download Past Surveys <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Salary Survey 2014</a></li>
+                    <li><a href="#">Salary Survey 2013</a></li>
+                    <li><a href="#">Salary Survey 2012</a></li>
+                    <li><a href="#">Salary Survey 2011</a></li>
+                    <li><a href="#">Salary Survey 2010</a></li>
+                </ul>
+            </li>
             <li>
-                <a href="http://bidsolutions.co.uk">Back to Bid Solutions.co.uk</a>
+                <a href="http://bidsolutions.co.uk" class="selected">Back to Bid Solutions.co.uk</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
@@ -74,10 +84,6 @@
                     magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
                     ea
                     commodo consequat. </p>
-
-                <ul class="list-inline text-center">
-                    <button class="btn btn-primary text-uppercase">Download PDF Survey 2015</button>
-                </ul>
             </div>
         </div>
         <div class="text-center" style="margin-top: 20px;opacity:0.9;">

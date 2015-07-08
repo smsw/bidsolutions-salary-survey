@@ -6,3 +6,36 @@
 header {
   margin-bottom: 0!important;
 }
+
+.navbar-nav {
+
+  > li > a {
+    padding: 10px;
+    border-radius: 3px;
+    &:hover {
+      color: @blue;
+    }
+  }
+
+  > li {
+    padding-top: 25px;
+    padding-bottom: 0px;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+
+  .open > .dropdown-toggle, .selected {
+    background: @light-blue;
+    color: white!important;
+
+    &:hover {
+      background: @light-blue!important;
+    }
+  }
+
+  .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #fff;
+    background-color: @light-blue;
+  }
+}

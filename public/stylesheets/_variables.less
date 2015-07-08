@@ -22,6 +22,7 @@
 
 @white:                 #fff;
 @blue:                  #242c3a;
+@light-blue: #038bb1;
 
 
 //== Scaffolding
@@ -253,7 +254,7 @@
 //** Active dropdown menu item text color.
 @dropdown-link-active-color:     #fff;
 //** Active dropdown menu item background color.
-@dropdown-link-active-bg:        @component-active-bg;
+@dropdown-link-active-bg:        @light-blue;
 
 //** Disabled dropdown menu item background color.
 @dropdown-link-disabled-color:   @gray-light;
@@ -372,18 +373,18 @@
 @navbar-default-border:            transparent;
 
 // Navbar links
-@navbar-default-link-color:                @brand-primary;
+@navbar-default-link-color:                @blue;
 @navbar-default-link-hover-color:          @brand-info;
 @navbar-default-link-hover-bg:             transparent;
 @navbar-default-link-active-color:         #fff;
-@navbar-default-link-active-bg:            darken(@navbar-default-bg, 10%);
+@navbar-default-link-active-bg:            @light-blue;
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
 @navbar-default-brand-color:               @navbar-default-link-color;
 @navbar-default-brand-hover-color:         @navbar-default-link-hover-color;
-@navbar-default-brand-hover-bg:            transparent;
+@navbar-default-brand-hover-bg:            darken(@light-blue, 5%);
 
 // Navbar toggle
 @navbar-default-toggle-hover-bg:           darken(@navbar-default-bg, 10%);
