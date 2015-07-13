@@ -17,7 +17,6 @@ var mongoose = require('mongoose'),
  * @returns {*}
  */
 var pickData = function (prop, type, data) {
-
     return data.map(function (o) {
         if (type !== '') {
             return o[prop][type];
@@ -45,6 +44,25 @@ var filterData = function (filter, prop, data) {
         }
     });
     return result;
+};
+
+
+
+/***
+ * Calculate total
+ * @param prop
+ * @param data
+ * @returns {Number|number}
+ */
+var calculateTotal = function (data) {
+    // add up all numbers
+    var totalValue = 0;
+
+    _.forEach(data, function (value, key) {
+        totalValue++;
+    });
+
+    return totalValue;
 };
 
 
@@ -123,27 +141,35 @@ var calculateMedian = function (prop, data) {
 var createByJobTitle = function (data) {
 
     var jobTitlesArr = [
-        {name: 'Bid Manager'}, {name: 'Document Manager'}, {name: 'Graphic Designer'},
-        {name: 'Head of Bid Management'}, {name: 'Head of Proposal Management'},
-        {name: 'Knowledgebase Manager'}, {name: 'Proposal Manager'}, {name: 'Proposal Writer'}
+        {name: 'Bid Manager'}, 
+        {name: 'Document Manager'}, 
+        {name: 'Graphic Designer'},
+        {name: 'Head of Bid Management'}, 
+        {name: 'Head of Proposal Management'},
+        {name: 'Knowledgebase Manager'}, 
+        {name: 'Proposal Manager'}, 
+        {name: 'Proposal Writer'}
     ];
 
     var dataByJobTitles = [];
+    var total = 0;
 
     _.forEach(jobTitlesArr, function (value, key) {
-        dataByJobTitles.push(
-            {
-                name: value.name,
-                salary: {
-                    average: calculateAverage('salary', filterData(value.name, 'bs_job_title', data)),
-                    median: calculateMedian('salary', filterData(value.name, 'bs_job_title', data)),
-                    maximum: calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', data)),
-                    minimum: calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', data))
-                },
-                average_age: calculateAverage('age', filterData(value.name, 'bs_job_title', data))
-            }
-        );
+      total = calculateTotal(filterData(value.name, 'bs_job_title', data));
+      dataByJobTitles.push({
+        name: value.name,
+        salary: {
+          average: total > 5 ? calculateAverage('salary', filterData(value.name, 'bs_job_title', data)) : 0,
+          median: total > 5 ? calculateMedian('salary', filterData(value.name, 'bs_job_title', data)) : 0,
+          maximum: total > 5 ? calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', data)) : 0,
+          minimum: total > 5 ? calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', data)) : 0
+        },
+        average_age: total > 5 ? calculateAverage('age', filterData(value.name, 'bs_job_title', data)) : 0,
+        total: total
+      });
     });
+
+    console.log('dataByJobTitles',dataByJobTitles);
     return dataByJobTitles;
 };
 
