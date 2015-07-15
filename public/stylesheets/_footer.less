@@ -1,0 +1,57 @@
+//
+// Footer
+// --------------------------------------------------
+footer {
+  background: @blue;
+  color: @text;
+  padding: 20px 20px 50px;
+  .text-center;
+
+  h3 {
+    .h4;
+    color: lighten(@text, 15%);
+  }
+  p.lead {
+    padding-top: 10px;
+    font-size: 17px;
+  }
+
+  p.copyright {
+    .small;
+  }
+
+  h3 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 30px;
+    color: #ffffff;
+    margin-top: 30px;
+    padding-top: 10px;
+  }
+
+  .btn-info {
+    background: lighten(@blue, 10%);
+    color: @white;
+    border-color: transparent;
+
+    &:hover, &:focus, &:active {
+      background: lighten(@blue, 15%);
+      border-color: transparent;
+    }
+  }
+
+}
+
+//
+// Medium devices (desktops, 992px and up)
+// --------------------------------------------------
+@media (min-width: @screen-md-min) {
+  footer {
+    text-align: unset;
+  }
+}
+
