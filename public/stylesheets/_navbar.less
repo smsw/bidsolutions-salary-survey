@@ -11,9 +11,13 @@
   }
 
   &:focus, &:active, &:hover {
-    background-color: transparent!important;
+    background-color: transparent !important;
     outline: 0;
   }
+}
+
+.navbar-toggle .icon-bar {
+  background: @blue !important;
 }
 
 header {
@@ -31,8 +35,8 @@ header {
   }
 
   > li {
-    padding-top: 25px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
     margin-right: 15px;
     margin-left: 15px;
   }
@@ -58,3 +62,27 @@ header {
     background: transparent;
   }
 }
+
+//
+// Media Queries
+// --------------------------------------------------
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+  .navbar-nav {
+    > li {
+      padding-top: 25px;
+    }
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) {
+
+}
+
