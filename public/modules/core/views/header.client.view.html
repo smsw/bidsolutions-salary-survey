@@ -6,7 +6,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="/#!/" class="navbar-brand"><img src="dist/images/logo-main.png" class="img-responsive"></a>
+        <a href="/#!/" class="navbar-brand">
+            <img src="dist/images/logo.svg" onerror="this.onerror=null; this.src='dist/images/logo-main.png'"
+                 class="img-responsive">
+        </a>
     </div>
     <nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
         <ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
@@ -30,7 +33,8 @@
         </ul>
         <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
             <li class="dropdown open">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Download Surveys <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="true">Download Surveys <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Salary Survey 2015</a></li>
                     <li><a href="#">Salary Survey 2014</a></li>
@@ -73,15 +77,14 @@
 
         <h1 class="text-center">Salary Survey 2015</h1>
 
-        <p class="text-center">The leading recruiter of bid and proposal professionals.</p>
+        <p class="text-center">Generate your personalised salary report and compare market salaries</p>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                    ea
-                    commodo consequat. </p>
+                <p class="text">Select variables from the dropdown menus and compare your salary to the 2015 UK bid and
+                    proposal market. We recommend starting your search broadly and narrow down one option at a time.
+                    Please note that blank cells indicate that insufficient data was gathered to accurately report on
+                    your selection </p>
             </div>
         </div>
         <div class="text-center" style="margin-top: 20px;opacity:0.9;">
