@@ -129,25 +129,25 @@
                     <tr>
                         <td>Minimum</td>
                         <td ng-repeat="job in tableData">
-                            {{job.salary.minimum}}
+                            {{job.salary.minimum | currency: "£" }}
                         </td>
                     </tr>
                     <tr>
                         <td>Average</td>
                         <td ng-repeat="job in tableData">
-                            {{job.salary.average}}
+                            {{job.salary.average | currency: "£" }}
                         </td>
                     </tr>
                     <tr>
                         <td>Median</td>
                         <td ng-repeat="job in tableData">
-                            {{job.salary.median}}
+                            {{job.salary.median | currency: "£" }}
                         </td>
                     </tr>
                     <tr>
                         <td>Maximum</td>
                         <td ng-repeat="job in tableData">
-                            {{job.salary.maximum}}
+                            {{job.salary.maximum | currency: "£" }}
                         </td>
                     </tr>
                     <tr>

@@ -45,7 +45,8 @@ angular.module('salaries').directive('salaryBarchart', [
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
-                                opposite: true
+                                opposite: true,
+                                min: 0
                             },
                             { // Secondary yAxis
 
@@ -60,9 +61,16 @@ angular.module('salaries').directive('salaryBarchart', [
                                     style: {
                                         color: Highcharts.getOptions().colors[1]
                                     }
-                                }
+                                },
+                                max: 150000
                             }
                         ],
+
+                        plotOptions: {
+                            series: {
+                                threshold: 0
+                            }
+                        },
                         tooltip: {
                             shared: true
                         },
