@@ -2,9 +2,9 @@
 
 module.exports = {
 	app: {
-		title: 'SalarySurvey',
-		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-		keywords: 'MongoDB, Express, AngularJS, Node.js'
+		title: 'Salary Survey 2015 - Bid Solutions',
+		description: 'Generate your personalised salary report and compare market salaries',
+		keywords: 'Salary Survey, Bid Solutions'
 	},
 	port: process.env.PORT || 3000,
 	templateEngine: 'swig',
