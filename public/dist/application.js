@@ -457,6 +457,9 @@ angular.module('salaries').directive('salaryBarchart', [
                         chart: {
                             renderTo: element[0]
                         },
+                        credits: {
+                            enabled: false
+                        },
                         title: {
                             text: ' '
                         },
