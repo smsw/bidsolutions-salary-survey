@@ -157,6 +157,7 @@ var createByJobTitle = function (prop, data) {
                 total: total
             });
         });
+        return dataByJobTitles;
     } else {
         _.forEach(jobTitlesArr, function (value, key) {
             total = calculateTotal(filterData(value.name, 'bs_job_title', data));
@@ -172,8 +173,8 @@ var createByJobTitle = function (prop, data) {
                 total: total
             });
         });
+        return dataByJobTitles;
     }
-    return dataByJobTitles;
 };
 
 /***
