@@ -65,7 +65,7 @@ angular.module('salaries').directive('salaryBarchart', [
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
-                                max: 150000
+                                //max: 150000
                             }
                         ],
 
