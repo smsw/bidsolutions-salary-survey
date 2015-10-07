@@ -7,8 +7,6 @@ var mongoose = require('mongoose'),
     Salary = mongoose.model('Salary'),
     _ = require('lodash');
 
-
-
 /***
  * Pick a property and return values
  * @param prop
@@ -25,8 +23,6 @@ var pickData = function (prop, type, data) {
         }
     });
 };
-
-
 
 /***
  * Filter data by various params
@@ -46,8 +42,6 @@ var filterData = function (filter, prop, data) {
     return result;
 };
 
-
-
 /***
  * Calculate total
  * @param prop
@@ -65,8 +59,6 @@ var calculateTotal = function (data) {
     return totalValue;
 };
 
-
-
 /***
  * Calculate Average
  * @param prop
@@ -83,8 +75,6 @@ var calculateAverage = function (prop, data) {
 
     return parseInt(Math.floor(totalValue / data.length)) || 0;
 };
-
-
 
 /***
  * Calculate Min/Max Value
@@ -104,8 +94,6 @@ var calculateMinMaxValue = function (prop, minMax, data) {
 
     return parseInt(Math[minMax].apply(Math, values)) || 0;
 };
-
-
 
 /***
  * Calculate Median
@@ -131,92 +119,106 @@ var calculateMedian = function (prop, data) {
         return parseInt((values[half - 1] + values[half]) / 2.0) || 0;
 };
 
-
-
 /***
  * Create object based on Job Title
+ * @param prop
  * @param data
  * @returns {Array}
  */
-var createByJobTitle = function (data) {
+var createByJobTitle = function (prop, data) {
 
     var jobTitlesArr = [
-        {name: 'Bid Manager'}, 
-        {name: 'Document Manager'}, 
+        {name: 'Bid Manager'},
+        {name: 'Document Manager'},
         {name: 'Graphic Designer'},
-        {name: 'Head of Bid Management'}, 
+        {name: 'Head of Bid Management'},
         {name: 'Head of Proposal Management'},
-        {name: 'Knowledgebase Manager'}, 
-        {name: 'Proposal Manager'}, 
+        {name: 'Knowledgebase Manager'},
+        {name: 'Proposal Manager'},
         {name: 'Proposal Writer'}
     ];
 
     var dataByJobTitles = [];
     var total = 0;
 
-    _.forEach(jobTitlesArr, function (value, key) {
-      total = calculateTotal(filterData(value.name, 'bs_job_title', data));
-      dataByJobTitles.push({
-        name: value.name,
-        salary: {
-          average: total > 5 ? calculateAverage('salary', filterData(value.name, 'bs_job_title', data)) : 0,
-          median: total > 5 ? calculateMedian('salary', filterData(value.name, 'bs_job_title', data)) : 0,
-          maximum: total > 5 ? calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', data)) : 0,
-          minimum: total > 5 ? calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', data)) : 0
-        },
-        average_age: total > 5 ? calculateAverage('age', filterData(value.name, 'bs_job_title', data)) : 0,
-        total: total
-      });
-    });
-
-    console.log('dataByJobTitles',dataByJobTitles);
-    return dataByJobTitles;
+    // @TODO: Refactor, push prop into object name
+    if (prop === 'day_charge_rate') {
+        _.forEach(jobTitlesArr, function (value, key) {
+            total = calculateTotal(filterData(value.name, 'bs_job_title', data));
+            dataByJobTitles.push({
+                name: value.name,
+                day_charge_rate: {
+                    average: total > 5 ? calculateAverage('day_charge_rate', filterData(value.name, 'bs_job_title', data)) : 0,
+                    median: total > 5 ? calculateMedian('day_charge_rate', filterData(value.name, 'bs_job_title', data)) : 0,
+                    maximum: total > 5 ? calculateMinMaxValue('day_charge_rate', 'max', filterData(value.name, 'bs_job_title', data)) : 0,
+                    minimum: total > 5 ? calculateMinMaxValue('day_charge_rate', 'min', filterData(value.name, 'bs_job_title', data)) : 0
+                },
+                average_age: total > 5 ? calculateAverage('age', filterData(value.name, 'bs_job_title', data)) : 0,
+                total: total
+            });
+        });
+        return dataByJobTitles;
+    } else {
+        _.forEach(jobTitlesArr, function (value, key) {
+            total = calculateTotal(filterData(value.name, 'bs_job_title', data));
+            dataByJobTitles.push({
+                name: value.name,
+                salary: {
+                    average: total > 5 ? calculateAverage('salary', filterData(value.name, 'bs_job_title', data)) : 0,
+                    median: total > 5 ? calculateMedian('salary', filterData(value.name, 'bs_job_title', data)) : 0,
+                    maximum: total > 5 ? calculateMinMaxValue('salary', 'max', filterData(value.name, 'bs_job_title', data)) : 0,
+                    minimum: total > 5 ? calculateMinMaxValue('salary', 'min', filterData(value.name, 'bs_job_title', data)) : 0
+                },
+                average_age: total > 5 ? calculateAverage('age', filterData(value.name, 'bs_job_title', data)) : 0,
+                total: total
+            });
+        });
+        return dataByJobTitles;
+    }
 };
-
-
 
 /***
  * Populate our response to parse
  * @param data
  * @returns {*[]}
  */
-var populateResponse = function (data) {
+var populateResponse = function (prop, data, name) {
 
-    var jobTitles = createByJobTitle(data);
+    var jobTitles = createByJobTitle(prop, data);
     return [
         {
-            name: 'Minimum Basic Salary',
+            name: 'Minimum Basic ' + name,
             type: 'column',
             yAxis: 1,
             // Goes in order of Categories
-            data: pickData('salary', 'minimum', jobTitles),
+            data: pickData(prop, 'minimum', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
         },
         {
-            name: 'Average Basic Salary',
+            name: 'Average Basic ' + name,
             type: 'column',
             yAxis: 1,
-            data: pickData('salary', 'average', jobTitles),
+            data: pickData(prop, 'average', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
         },
         {
-            name: 'Median Basic Salary',
+            name: 'Median Basic ' + name,
             type: 'column',
             yAxis: 1,
-            data: pickData('salary', 'median', jobTitles),
+            data: pickData(prop, 'median', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
         },
         {
-            name: 'Maximum Basic Salary',
+            name: 'Maximum Basic ' + name,
             type: 'column',
             yAxis: 1,
-            data: pickData('salary', 'maximum', jobTitles),
+            data: pickData(prop, 'maximum', jobTitles),
             tooltip: {
                 valueSuffix: '(GBP)'
             }
@@ -231,7 +233,6 @@ var populateResponse = function (data) {
         }
     ];
 };
-
 
 
 /***
@@ -254,7 +255,6 @@ var age_splitter = function (req) {
 };
 
 
-
 /***
  * List of Salaries filtered by Query
  * @param req
@@ -262,19 +262,34 @@ var age_splitter = function (req) {
  */
 exports.list = function (req, res, next) {
 
-    console.log(req.query);
-
     var newQuery = req.query;
     newQuery.age = {$gte: age_splitter(req).min, $lte: age_splitter(req).max};
 
-    Salary.find(newQuery)
-        .exec(function (err, salaries) {
-            if (err) {
-                return next(err);
-            }
-            res.jsonp([{
-                chart: populateResponse(salaries),
-                table: createByJobTitle(salaries)
-            }]);
-        });
+    if (newQuery.employment_status === 'Self-Employed, Independent Consultant or Freelance') {
+        // We need to create a query by day earnings and not by salary
+        Salary.find(newQuery)
+            .exec(function (err, salaries) {
+                if (err) {
+                    return next(err);
+                }
+                res.jsonp([{
+                    chart: populateResponse('day_charge_rate', salaries, 'Day Charge Rate'),
+                    table: createByJobTitle('day_charge_rate', salaries),
+                    type: 'day_charge_rate'
+                }]);
+            });
+
+    } else {
+        Salary.find(newQuery)
+            .exec(function (err, salaries) {
+                if (err) {
+                    return next(err);
+                }
+                res.jsonp([{
+                    chart: populateResponse('salary', salaries, 'Salary'),
+                    table: createByJobTitle('salary', salaries),
+                    type: 'salary'
+                }]);
+            });
+    }
 };

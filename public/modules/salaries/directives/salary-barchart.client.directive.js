@@ -8,7 +8,8 @@ angular.module('salaries').directive('salaryBarchart', [
             template: '<div></div>',
             restrict: 'E',
             scope: {
-                chartData: '='
+                chartData: '=',
+                chartHeight: '='
             },
             link: function (scope, element, attrs) {
 
@@ -65,7 +66,7 @@ angular.module('salaries').directive('salaryBarchart', [
                                         color: Highcharts.getOptions().colors[1]
                                     }
                                 },
-                                max: 150000
+                                max: scope.chartHeight
                             }
                         ],
 

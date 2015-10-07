@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    <salary-barchart chart-data="chartData" class="chart" style="height:500px"></salary-barchart>
+    <salary-barchart chart-data="chartData" chart-height="chartHeight" class="chart" style="height:500px"></salary-barchart>
 
     <div class="row">
         <div class="col-md-12">
@@ -129,25 +129,25 @@
                     <tr>
                         <td>Minimum</td>
                         <td ng-repeat="job in tableData">
-                           £{{job.salary.minimum | number : 0 }}
+                            £{{job.day_charge_rate.minimum | number: 0 }}{{job.salary.minimum | number : 0 }}
                         </td>
                     </tr>
                     <tr>
                         <td>Average</td>
                         <td ng-repeat="job in tableData">
-                            £{{job.salary.average | number: 0 }}
+                            £{{job.day_charge_rate.average | number: 0 }}{{job.salary.average | number : 0 }}
                         </td>
                     </tr>
                     <tr>
                         <td>Median</td>
                         <td ng-repeat="job in tableData">
-                            £{{job.salary.median | number: 0 }}
+                            £{{job.day_charge_rate.median | number: 0 }}{{job.salary.median | number : 0 }}
                         </td>
                     </tr>
                     <tr>
                         <td>Maximum</td>
                         <td ng-repeat="job in tableData">
-                            £{{job.salary.maximum | number: 0 }}
+                            £{{job.day_charge_rate.maximum | number: 0 }}{{job.salary.maximum | number : 0 }}
                         </td>
                     </tr>
                     <tr>
