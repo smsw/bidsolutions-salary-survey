@@ -274,7 +274,8 @@ exports.list = function (req, res, next) {
                 }
                 res.jsonp([{
                     chart: populateResponse('day_charge_rate', salaries, 'Day Charge Rate'),
-                    table: createByJobTitle('day_charge_rate', salaries)
+                    table: createByJobTitle('day_charge_rate', salaries),
+                    type: 'day_charge_rate'
                 }]);
             });
 
@@ -286,7 +287,8 @@ exports.list = function (req, res, next) {
                 }
                 res.jsonp([{
                     chart: populateResponse('salary', salaries, 'Salary'),
-                    table: createByJobTitle('salary', salaries)
+                    table: createByJobTitle('salary', salaries),
+                    type: 'salary'
                 }]);
             });
     }

@@ -5,7 +5,7 @@ angular.module('salaries').controller('SalariesFilteredController', ['$scope', '
         // Salaries filtered controller logic
         // ...
 
-        $scope.toggleLegend = function(){
+        $scope.toggleLegend = function () {
             var clicked = true;
             var series = $scope.chart.series[0];
 
@@ -25,7 +25,19 @@ angular.module('salaries').controller('SalariesFilteredController', ['$scope', '
          */
         $scope.chartUpdate = function () {
             var Salary = new SalariesFiltered.query($scope.salary);
+            console.log(Salary);
+
             Salary.$promise.then(function (data) {
+
+                if (data[0].type === 'day_charge_rate') {
+                    // Day charge rate exists, change max-height of chart currency
+                    $scope.chartHeight = 2000;
+
+                } else if (data[0].type === 'salary') {
+                    // Salary height
+                    $scope.chartHeight = 150000;
+                }
+
                 $scope.chartData = data[0].chart; // Chart Data
                 $scope.tableData = data[0].table; // Tabular Data
                 $scope.count = data[0].count; // Totals
