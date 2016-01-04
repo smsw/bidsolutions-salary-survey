@@ -318,8 +318,6 @@ angular.module('salaries').controller('SalariesFilteredController', ['$scope', '
          */
         $scope.chartUpdate = function () {
             var Salary = new SalariesFiltered.query($scope.salary);
-            console.log(Salary);
-
             Salary.$promise.then(function (data) {
 
                 if (data[0].type === 'day_charge_rate') {
