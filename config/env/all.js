@@ -2,7 +2,7 @@
 
 module.exports = {
 	app: {
-		title: 'Salary Survey 2015 - Bid Solutions',
+		title: 'Personalised Salary Reports - Bid Solutions',
 		description: 'Generate your personalised salary report and compare market salaries',
 		keywords: 'Salary Survey, Bid Solutions'
 	},
